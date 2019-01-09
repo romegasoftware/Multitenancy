@@ -1,0 +1,35 @@
+{
+    "name": "orchestra/testbench",
+    "description": "Laravel Testing Helper for Packages Development",
+    "homepage": "http://orchestraplatform.com/docs/latest/components/testbench/",
+    "keywords": ["laravel", "orchestral", "orchestra-platform", "testing", "tdd", "bdd"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mior Muhammad Zaki",
+            "email": "crynobone@gmail.com",
+            "homepage": "https://github.com/crynobone"
+        }
+    ],
+    "autoload-dev": {
+        "psr-4": {
+            "Orchestra\\Testbench\\Tests\\": "core/tests/"
+        }
+    },
+    "require": {
+        "php": ">=7.1",
+        "laravel/framework": "~5.7.14",
+        "mockery/mockery": "^1.0",
+        "orchestra/testbench-core": "~3.7.7",
+        "phpunit/phpunit": "^7.0"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.7-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev"
+}

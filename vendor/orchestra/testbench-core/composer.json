@@ -1,0 +1,53 @@
+{
+    "name": "orchestra/testbench-core",
+    "description": "Testing Helper for Laravel Development",
+    "homepage": "http://orchestraplatform.com/docs/latest/components/testbench/",
+    "keywords": ["laravel", "orchestral", "orchestra-platform", "testing", "tdd", "bdd"],
+    "license": "MIT",
+    "support": {
+        "issues": "https://github.com/orchestral/testbench/issues",
+        "source": "https://github.com/orchestral/testbench-core"
+    },
+    "authors": [
+        {
+            "name": "Mior Muhammad Zaki",
+            "email": "crynobone@gmail.com",
+            "homepage": "https://github.com/crynobone"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Orchestra\\Testbench\\" : "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Orchestra\\Testbench\\Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "php": ">=7.1",
+        "fzaninotto/faker": "^1.4"
+    },
+    "require-dev": {
+        "laravel/framework": "~5.7.14",
+        "mockery/mockery": "^1.0",
+        "phpunit/phpunit": "^7.0"
+    },
+    "suggest": {
+        "laravel/framework": "Required for testing (~5.7.14).",
+        "mockery/mockery": "Allow to use Mockery for testing (^1.0).",
+        "orchestra/testbench-browser-kit": "Allow to use legacy Laravel BrowserKit for testing (~3.7).",
+        "orchestra/testbench-dusk": "Allow to use Laravel Dusk for testing (~3.7).",
+        "phpunit/phpunit": "Allow to use PHPUnit for testing (^7.0)."
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.7-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev"
+}
