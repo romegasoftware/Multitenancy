@@ -3,19 +3,18 @@
 namespace RomegaDigital\Multitenancy\Tests;
 
 use Illuminate\Database\Schema\Blueprint;
-use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use RomegaDigital\Multitenancy\Contracts\Tenant;
-use RomegaDigital\Multitenancy\MultitenancyFacade;
-use RomegaDigital\Multitenancy\MultitenancyServiceProvider;
-use Spatie\Permission\Contracts\Role;
 use Spatie\Permission\PermissionServiceProvider;
+use RomegaDigital\Multitenancy\MultitenancyFacade;
+use Orchestra\Testbench\TestCase as OrchestraTestCase;
+use RomegaDigital\Multitenancy\MultitenancyServiceProvider;
 
 class TestCase extends OrchestraTestCase
 {
-    protected $testUser,
-        $testTenant,
-        $testAdminTenant,
-        $testProduct;
+    protected $testUser;
+    protected $testTenant;
+    protected $testAdminTenant;
+    protected $testProduct;
 
     /**
      * Set up the environment.
@@ -53,7 +52,6 @@ class TestCase extends OrchestraTestCase
         ];
     }
 
-
     public function setUp()
     {
         parent::setUp();
@@ -65,7 +63,6 @@ class TestCase extends OrchestraTestCase
         $this->testProduct = Product::first();
     }
 
-
     /**
      * Set up the database.
      *
@@ -76,12 +73,12 @@ class TestCase extends OrchestraTestCase
         $this->artisan('migrate', ['--database' => 'testing']);
 
         $app[Tenant::class]->create([
-            'name'      => 'Tenant Name',
-            'domain'    => 'masterdomain'
+            'name' => 'Tenant Name',
+            'domain' => 'masterdomain'
         ]);
         $app[Tenant::class]->create([
-            'name'      => 'Admin',
-            'domain'    => 'admin'
+            'name' => 'Admin',
+            'domain' => 'admin'
         ]);
 
         $app['db']->connection()->getSchemaBuilder()->create('users', function (Blueprint $table) {
@@ -105,7 +102,5 @@ class TestCase extends OrchestraTestCase
             'name' => 'Product 1',
             'tenant_id' => '1'
         ]);
-
     }
-
 }

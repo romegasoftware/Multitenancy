@@ -57,6 +57,7 @@ class MigrationMakeCommand extends GeneratorCommand
      */
     public function handle()
     {
+        dd('test');
         parent::handle();
 
         $this->composer->dumpAutoloads();
