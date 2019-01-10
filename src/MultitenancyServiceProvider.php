@@ -22,7 +22,7 @@ class MultitenancyServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(realpath(__DIR__ . '/../migrations'));
 
         $this->publishes([
-            __DIR__ . '/../migrations/create_tenants_table.php' => $this->getMigrationFileName($filesystem),
+            __DIR__ . '/../migrations/create_tenants_table.php.stub' => $this->getMigrationFileName($filesystem),
         ], 'migrations');
 
         $this->publishes([

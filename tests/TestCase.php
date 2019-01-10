@@ -70,7 +70,9 @@ class TestCase extends OrchestraTestCase
      */
     protected function setUpDatabase($app)
     {
-        $this->artisan('migrate', ['--database' => 'testing']);
+        include_once __DIR__ . '/../migrations/create_tenants_table.php.stub';
+
+        (new \CreateTenantsTable())->up();
 
         $app[Tenant::class]->create([
             'name' => 'Tenant Name',
