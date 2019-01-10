@@ -5,6 +5,7 @@ namespace RomegaDigital\Multitenancy;
 use Illuminate\Support\Collection;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
+use RomegaDigital\Multitenancy\Commands\MigrationMakeCommand;
 use RomegaDigital\Multitenancy\Contracts\Tenant as TenantContract;
 
 class MultitenancyServiceProvider extends ServiceProvider
@@ -16,6 +17,8 @@ class MultitenancyServiceProvider extends ServiceProvider
      */
     public function boot(Filesystem $filesystem)
     {
+        $this->commands([MigrationMakeCommand::class]);
+
         $this->loadMigrationsFrom(realpath(__DIR__ . '/../migrations'));
 
         $this->publishes([
