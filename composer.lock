@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a09d532582040978d0d5e4ecb8fed852",
+    "content-hash": "f4dfed882b595a23270102306643c936",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -2805,49 +2805,6 @@
                 "environment"
             ],
             "time": "2018-10-30T17:29:25+00:00"
-        },
-        {
-            "name": "vyuldashev/nova-permission",
-            "version": "v1.4.7",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/vyuldashev/nova-permission.git",
-                "reference": "bd910a1e5908fc0ccac588da91c0ec63a94b2ab7"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/vyuldashev/nova-permission/zipball/bd910a1e5908fc0ccac588da91c0ec63a94b2ab7",
-                "reference": "bd910a1e5908fc0ccac588da91c0ec63a94b2ab7",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.1",
-                "spatie/laravel-permission": "^2.16"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Vyuldashev\\NovaPermission\\ToolServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Vyuldashev\\NovaPermission\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "A Laravel Nova tool for Spatie's Permission library.",
-            "keywords": [
-                "laravel",
-                "nova",
-                "spatie-permission"
-            ],
-            "time": "2018-12-27T13:01:00+00:00"
         },
         {
             "name": "zendframework/zend-diactoros",
