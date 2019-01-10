@@ -8,13 +8,14 @@ To scope a resource to the currently accessed subdomain, you simply need to add 
 
 Any resources saved while accessing a scoped subdomain will automatically be saved against the tenant assigned that subdomain.
 
-* [Installation](#installation)
-* [Usage](#usage)
-  * [Middleware](#middleware)
-  * [Tenant Assignment for Other Models](#tenant-assignment-for-other-models)
-  * [Assigning Super Administrator Role](#assigning-super-administrator-role)
-  * [Console Commands](#console-commands)
-* [Managing with Nova](#managing-with-nova)
+- [Multitenancy Package](#multitenancy-package)
+  - [Installation](#installation)
+  - [Usage](#usage)
+    - [Middleware](#middleware)
+    - [Tenant Assignment for Other Models](#tenant-assignment-for-other-models)
+    - [Assigning Super Administrator Role](#assigning-super-administrator-role)
+    - [Console Commands](#console-commands)
+  - [Managing with Nova](#managing-with-nova)
 
 
 ## Installation
@@ -38,6 +39,12 @@ Then run migrations
 
 ```bash
 php artisan migrate
+```
+
+You can publish the migration file with:
+
+```bash
+php artisan vendor:publish --provider="RomegaDigital\Multitenancy\MultitenancyServiceProvider" --tag="migrations"
 ```
 
 You can publish the config file with:
@@ -150,7 +157,7 @@ Tenant::create([
 You can generate a migration to add tenancy to an existing model's table using
 
 ```bash
-php artisan multitenancy:migrate --table=products
+php artisan multitenancy:migration products
 ```
 
 ## Managing with Nova
