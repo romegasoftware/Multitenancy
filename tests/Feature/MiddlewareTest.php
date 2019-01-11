@@ -2,10 +2,7 @@
 
 namespace RomegaDigital\Multitenancy\Tests\Feature;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Request as RequestFacade;
 use RomegaDigital\Multitenancy\Exceptions\TenantDoesNotExist;
 use RomegaDigital\Multitenancy\Exceptions\UnauthorizedException;
 use RomegaDigital\Multitenancy\Middlewares\TenantMiddleware;
@@ -20,16 +17,15 @@ class MiddlewareTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->tenantMiddleware = new TenantMiddleware($this->app);
+        $this->tenantMiddleware = new TenantMiddleware(app('multitenancy'));
     }
 
     protected function buildRequest($domain)
     {
-        app('request')->headers->set('HOST',$domain.'.example.com');
+        app('request')->headers->set('HOST', $domain . '.example.com');
         return $this->tenantMiddleware->handle(app('request'), function () {
             return (new Response())->setContent('<html></html>');
         });
-
     }
 
     /** @test */
@@ -37,11 +33,11 @@ class MiddlewareTest extends TestCase
     {
         $this->actingAs($this->testUser);
 
-        try{
+        try {
             $this->buildRequest('testdomain');
-            $this->fail("Expected exception not thrown");
-        }catch(TenantDoesNotExist $e){ //Not catching a generic Exception or the fail function is also catched
-            $this->assertEquals("There is no tenant at domain `testdomain`.", $e->getMessage());
+            $this->fail('Expected exception not thrown');
+        } catch (TenantDoesNotExist $e) { //Not catching a generic Exception or the fail function is also catched
+            $this->assertEquals('There is no tenant at domain `testdomain`.', $e->getMessage());
         }
     }
 
@@ -50,10 +46,10 @@ class MiddlewareTest extends TestCase
     {
         $this->actingAs($this->testUser);
 
-        try{
+        try {
             $this->buildRequest($this->testTenant->domain);
-            $this->fail("Expected exception not thrown");
-        }catch(UnauthorizedException $e){ //Not catching a generic Exception or the fail function is also catched
+            $this->fail('Expected exception not thrown');
+        } catch (UnauthorizedException $e) { //Not catching a generic Exception or the fail function is also catched
             $this->assertEquals(403, $e->getStatusCode());
             $this->assertEquals("The authenticated user does not have access to domain `{$this->testTenant->domain}`.", $e->getMessage());
         }
@@ -62,12 +58,12 @@ class MiddlewareTest extends TestCase
     /** @test **/
     public function it_throws_error_if_user_is_not_logged_in()
     {
-        try{
+        try {
             $this->buildRequest($this->testTenant->domain);
-            $this->fail("Expected exception not thrown");
-        }catch(UnauthorizedException $e){ //Not catching a generic Exception or the fail function is also catched
+            $this->fail('Expected exception not thrown');
+        } catch (UnauthorizedException $e) { //Not catching a generic Exception or the fail function is also catched
             $this->assertEquals(403, $e->getStatusCode());
-            $this->assertEquals("User is not logged in.", $e->getMessage());
+            $this->assertEquals('User is not logged in.', $e->getMessage());
         }
     }
 
@@ -77,11 +73,10 @@ class MiddlewareTest extends TestCase
         $this->actingAs($this->testUser);
 
         $this->testTenant->users()->sync($this->testUser);
-        
+
         $this->assertEquals(
             $this->buildRequest($this->testTenant->domain)->getStatusCode(),
-            200);
+            200
+        );
     }
-
-
 }
