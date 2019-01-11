@@ -6,6 +6,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
+use RomegaDigital\Multitenancy\Commands\InstallCommand;
 use RomegaDigital\Multitenancy\Commands\MigrationMakeCommand;
 use RomegaDigital\Multitenancy\Contracts\Tenant as TenantContract;
 
@@ -18,25 +19,14 @@ class MultitenancyServiceProvider extends ServiceProvider
      */
     public function boot(Filesystem $filesystem)
     {
-        $this->commands([MigrationMakeCommand::class]);
-
         $this->loadMigrationsFrom(realpath(__DIR__ . '/../migrations'));
 
-        $this->publishes([
-            __DIR__ . '/../migrations/create_tenants_table.php.stub' => $this->getMigrationFileName($filesystem),
-        ], 'migrations');
+        if ($this->app->runningInConsole()) {
+            $this->registerPublishing($filesystem);
+        }
 
-        $this->publishes([
-            __DIR__ . '/../config/multitenancy.php' => config_path('multitenancy.php'),
-        ], 'config');
-
+        $this->registerCommands();
         $this->registerModelBindings();
-
-        $this->app->singleton(Multitenancy::class, function () {
-            return new Multitenancy();
-        });
-
-        $this->app->alias(Multitenancy::class, 'multitenancy');
 
         Gate::before(function ($user, $ability) {
             if ($user->can('can access admin') && app('multitenancy')->getCurrentSubDomain() === 'admin') {
@@ -56,6 +46,41 @@ class MultitenancyServiceProvider extends ServiceProvider
             __DIR__ . '/../config/multitenancy.php',
             'multitenancy'
         );
+
+        $this->app->singleton(Multitenancy::class, function () {
+            return new Multitenancy();
+        });
+
+        $this->app->alias(Multitenancy::class, 'multitenancy');
+    }
+
+    /**
+     * Register the package's publishable resources.
+     *
+     * @return void
+     */
+    protected function registerPublishing(Filesystem $filesystem)
+    {
+        $this->publishes([
+            __DIR__ . '/../migrations/create_tenants_table.php.stub' => $this->getMigrationFileName($filesystem),
+        ], 'migrations');
+
+        $this->publishes([
+            __DIR__ . '/../config/multitenancy.php' => config_path('multitenancy.php'),
+        ], 'config');
+    }
+
+    /**
+     * Registers all commands within the package.
+     *
+     * @return void
+     */
+    protected function registerCommands()
+    {
+        $this->commands([
+            InstallCommand::class,
+            MigrationMakeCommand::class,
+        ]);
     }
 
     /**
