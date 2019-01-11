@@ -27,7 +27,7 @@ class Multitenancy
     }
 
     /**
-     * Sets the Tenant to a Tenant Model
+     * Sets the Tenant to a Tenant Model.
      */
     public function setTenant(Tenant $tenant)
     {
@@ -57,7 +57,7 @@ class Multitenancy
     }
 
     /**
-     * Applies applicable tenant id to model on create
+     * Applies applicable tenant id to model on create.
      */
     public function newModel(Model $model)
     {
@@ -112,14 +112,14 @@ class Multitenancy
         $subdomains = explode('.', $currentDomain, -2);
 
         // Combine multiple level of domains into 1 string
-        // ex: back to masterdomain.text
+        // ex: back to masterdomain.test
         $subdomain = implode($subdomains, '.');
 
         return $subdomain;
     }
 
     /**
-     * Returns tenenat from request subdomain.
+     * Returns tenant from request subdomain.
      *
      * @return \RomegaDigital\Multitenancy\Contracts\Tenant
      */
