@@ -47,7 +47,7 @@ class Multitenancy
             return;
         }
 
-        if ($this->tenant->domain == 'admin') {
+        if ($this->tenant->domain === 'admin') {
             return;
         }
 

@@ -3,6 +3,7 @@
 namespace RomegaDigital\Multitenancy;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
 use RomegaDigital\Multitenancy\Commands\MigrationMakeCommand;
@@ -36,6 +37,12 @@ class MultitenancyServiceProvider extends ServiceProvider
         });
 
         $this->app->alias(Multitenancy::class, 'multitenancy');
+
+        Gate::before(function ($user, $ability) {
+            if ($user->can('can access admin') && app('multitenancy')->getCurrentSubDomain() === 'admin') {
+                return true;
+            }
+        });
     }
 
     /**
