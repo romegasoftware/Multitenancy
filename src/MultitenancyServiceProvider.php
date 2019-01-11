@@ -15,6 +15,7 @@ class MultitenancyServiceProvider extends ServiceProvider
     /**
      * Bootstrap the package services.
      *
+     * @param Illuminate\Filesystem\Filesystem $filesystem
      * @return void
      */
     public function boot(Filesystem $filesystem)
@@ -57,6 +58,7 @@ class MultitenancyServiceProvider extends ServiceProvider
     /**
      * Register the package's publishable resources.
      *
+     * @param Illuminate\Filesystem\Filesystem $filesystem
      * @return void
      */
     protected function registerPublishing(Filesystem $filesystem)
@@ -96,7 +98,7 @@ class MultitenancyServiceProvider extends ServiceProvider
     /**
      * Returns existing migration file if found, else uses the current timestamp.
      *
-     * @param Filesystem $filesystem
+     * @param Illuminate\Filesystem\Filesystem $filesystem
      * @return string
      */
     protected function getMigrationFileName(Filesystem $filesystem): string

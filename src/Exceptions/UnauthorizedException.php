@@ -9,8 +9,11 @@ class UnauthorizedException extends HttpException
 	/**
 	 * A user does not have valid permissions to access
 	 * the supplied domain.
+	 *
+	 * @param string $domain
+	 * @return static
 	 */
-	public static function forDomain(string $domain)
+	public static function forDomain(string $domain): self
 	{
 		$message = "The authenticated user does not have access to domain `{$domain}`.";
 
@@ -21,6 +24,8 @@ class UnauthorizedException extends HttpException
 
 	/**
 	 * A user is not logged in.
+	 *
+	 * @return static
 	 */
 	public static function notLoggedIn(): self
 	{

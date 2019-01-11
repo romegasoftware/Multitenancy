@@ -18,7 +18,7 @@ class TenantMiddleware
     /**
      * Create new TenantMiddleware instance.
      *
-     * @param Multitenancy $multitenancy
+     * @param RomegaDigital\Multitenancy\Multitenancy $multitenancy
      */
     public function __construct(Multitenancy $multitenancy)
     {
@@ -30,9 +30,9 @@ class TenantMiddleware
      *
      * @param \Illuminate\Http\Request $request
      * @param \Closure                 $next
-     * @param string|null              $guard
-     *
      * @return mixed
+     *
+     * @throws \RomegaDigital\Multitenancy\Exceptions\UnauthorizedException
      */
     public function handle(Request $request, Closure $next)
     {
@@ -55,7 +55,6 @@ class TenantMiddleware
      * Check if user is authorized to access tenant's domain.
      *
      * @param \RomegaDigital\Multitenancy\Contracts\Tenant $tenant
-     *
      * @return boolean
      */
     protected function authorizedToAccessTenant(Tenant $tenant)

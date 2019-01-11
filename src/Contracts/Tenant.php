@@ -17,10 +17,9 @@ interface Tenant
      * Find a Tenant by its domain.
      *
      * @param string $domain
+     * @return Tenant
      *
      * @throws \RomegaDigital\Multitenancy\Exceptions\TenantDoesNotExist
-     *
-     * @return Tenant
      */
     public static function findByDomain(string $domain): self;
 }

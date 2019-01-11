@@ -8,13 +8,26 @@ use RomegaDigital\Multitenancy\Contracts\Tenant;
 
 class Multitenancy
 {
-    /** @var string */
+    /**
+     * The tenant model as defined in the config file.
+     *
+     * @var string
+     */
     protected $tenantClass;
 
-    /** @var int */
+    /**
+     * The current tenant model.
+     *
+     * @var RomegaDigital\Multitenancy\Contracts\Tenant
+     */
     protected $tenant = null;
 
-    /** @var collect */
+    /**
+     * Models that need scopes before the app fully boots
+     * they will be processed at a later time.
+     *
+     * @var collect
+     */
     protected $deferredModels;
 
     /**
@@ -28,6 +41,9 @@ class Multitenancy
 
     /**
      * Sets the Tenant to a Tenant Model.
+     *
+     * @param RomegaDigital\Multitenancy\Contracts\Tenant $tenant
+     * @return $this
      */
     public function setTenant(Tenant $tenant)
     {
@@ -39,6 +55,9 @@ class Multitenancy
     /**
      * Applies applicable tenant scopes to model or if not booted yet
      * store for deferment.
+     *
+     * @param Illuminate\Database\Eloquent\Model $model
+     * @return void|null
      */
     public function applyTenantScope(Model $model)
     {
@@ -58,6 +77,9 @@ class Multitenancy
 
     /**
      * Applies applicable tenant id to model on create.
+     *
+     * @param Illuminate\Database\Eloquent\Model $model
+     * @return void|null
      */
     public function newModel(Model $model)
     {
@@ -74,6 +96,8 @@ class Multitenancy
     /**
      * Applies applicable tenant scope to deferred model booted
      * before tenants setup.
+     *
+     * @return void
      */
     public function applyTenantScopeToDeferredModels()
     {
@@ -101,6 +125,8 @@ class Multitenancy
      * ex:
      * test.domain.com returns test
      * test2.test.domain.com returns test2
+     * 
+     * @return string
      */
     public function getCurrentSubDomain() : string
     {

@@ -45,10 +45,9 @@ class Tenant extends Model implements TenantContract
      * Find a Tenant by its domain.
      *
      * @param string $domain
+     * @return \RomegaDigital\Multitenancy\Contracts\Tenant
      *
      * @throws \RomegaDigital\Multitenancy\Exceptions\TenantDoesNotExist
-     *
-     * @return \RomegaDigital\Multitenancy\Contracts\Tenant
      */
     public static function findByDomain(string $domain): TenantContract
     {
