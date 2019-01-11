@@ -29,7 +29,7 @@ class DummyClass extends Migration
      */
     public function down()
     {
-        Schema::table({{$tablename}}, function (Blueprint $table) {
+        Schema::table("DummyTable", function (Blueprint $table) {
             $table->dropColumn('tenant_id');
         });
     }
