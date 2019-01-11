@@ -27,7 +27,7 @@ class MigrationMakeCommand extends GeneratorCommand
      *
      * @var string
      */
-    protected $type = 'Tenant-Migration';
+    protected $type = 'Multitenancy migration';
 
     /**
      * The Composer instance.
