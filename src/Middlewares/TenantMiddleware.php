@@ -5,7 +5,7 @@ namespace RomegaDigital\Multitenancy\Middlewares;
 use Closure;
 use Illuminate\Http\Request;
 use RomegaDigital\Multitenancy\Multitenancy;
-use RomegaDigital\Multitenancy\Models\Tenant;
+use RomegaDigital\Multitenancy\Contracts\Tenant;
 use RomegaDigital\Multitenancy\Exceptions\UnauthorizedException;
 
 class TenantMiddleware
@@ -40,8 +40,7 @@ class TenantMiddleware
             throw UnauthorizedException::notLoggedIn();
         }
 
-        $domain = $this->multitenancy->getCurrentSubDomain();
-        $tenant = $this->multitenancy->getTenantClass()::findByDomain($domain);
+        $tenant = $this->multitenancy->receiveTenantFromRequest();
 
         if (!$this->authorizedToAccessTenant($tenant)) {
             throw UnauthorizedException::forDomain($tenant->domain);
@@ -55,7 +54,7 @@ class TenantMiddleware
     /**
      * Check if user is authorized to access tenant's domain.
      *
-     * @param RomegaDigital\Multitenancy\Models\Tenant $tenant
+     * @param \RomegaDigital\Multitenancy\Contracts\Tenant $tenant
      *
      * @return boolean
      */
