@@ -10,7 +10,7 @@ class InstallCommandTest extends TestCase
     public function it_published_and_migrates_required_migrations_and_creates_admin_role_and_tenant()
     {
         $this->artisan('multitenancy:install')
-            ->expectsOutput('Publishing required Migations...')
+            ->expectsOutput('Publishing required migrations...')
             ->expectsOutput('Migrations published!')
             ->expectsOutput('Adding `Super Administrator` Role...')
             ->expectsOutput('Role `Super Administrator` created')

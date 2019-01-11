@@ -59,7 +59,7 @@ class InstallCommand extends Command
      */
     protected function handleMigrations()
     {
-        $this->info('Publishing required Migations...');
+        $this->info('Publishing required migrations...');
 
         $this->callSilent('vendor:publish', [
             '--provider' => 'Spatie\Permission\PermissionServiceProvider',
@@ -79,7 +79,8 @@ class InstallCommand extends Command
     }
 
     /**
-     * Creates a super admin role.
+     * Creates a super admin role and 'can access admin' 
+     * permission.
      *
      * @return void
      */
