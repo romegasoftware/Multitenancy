@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
-class AddTenantIDColumnTo{{$tablename}}Table extends Migration
+class DummyClass extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class AddTenantIDColumnTo{{$tablename}}Table extends Migration
      */
     public function up()
     {
-        Schema::table({{$tablename}}, function (Blueprint $table) {
+        Schema::table("DummyTable", function (Blueprint $table) {
             $table->unsignedInteger('tenant_id');
             $table->foreign('tenant_id')
                 ->references('id')
-                ->on({{config.table_names.tenants}})
+                ->on("DummyTenantTable")
                 ->onDelete('cascade');
         });
     }
@@ -29,7 +29,7 @@ class AddTenantIDColumnTo{{$tablename}}Table extends Migration
      */
     public function down()
     {
-        Schema::table({{$tablename}}, function (Blueprint $table) {
+        Schema::table("DummyTable", function (Blueprint $table) {
             $table->dropColumn('tenant_id');
         });
     }
