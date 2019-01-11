@@ -3,11 +3,12 @@
 namespace RomegaDigital\Multitenancy\Tests;
 
 use Illuminate\Database\Schema\Blueprint;
-use RomegaDigital\Multitenancy\Contracts\Tenant;
-use Spatie\Permission\PermissionServiceProvider;
-use RomegaDigital\Multitenancy\MultitenancyFacade;
+use Illuminate\Support\Facades\Schema;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
+use RomegaDigital\Multitenancy\Contracts\Tenant;
+use RomegaDigital\Multitenancy\MultitenancyFacade;
 use RomegaDigital\Multitenancy\MultitenancyServiceProvider;
+use Spatie\Permission\PermissionServiceProvider;
 
 class TestCase extends OrchestraTestCase
 {
@@ -83,7 +84,7 @@ class TestCase extends OrchestraTestCase
     protected function setUpDatabase($app)
     {
         $this->loadMigrationsFrom(realpath(__DIR__.'/../migrations'));
-        $this->artisan('migrate');
+        $this->artisan('migrate')->run();
 
         $app[Tenant::class]->create([
             'name' => 'Tenant Name',
@@ -94,14 +95,14 @@ class TestCase extends OrchestraTestCase
             'domain' => 'admin'
         ]);
 
-        $app['db']->connection()->getSchemaBuilder()->create('users', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('email');
             $table->softDeletes();
         });
         User::create(['email' => 'test@user.com']);
 
-        $app['db']->connection()->getSchemaBuilder()->create('products', function (Blueprint $table) {
+        Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->unsignedInteger('tenant_id');
