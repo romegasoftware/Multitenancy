@@ -35,35 +35,29 @@ In Laravel 5.5 the service provider will automatically get registered. In older 
 ];
 ```
 
-Then run migrations
-
-```bash
-php artisan migrate
-```
-
-You can publish the migration file with:
-
-```bash
-php artisan vendor:publish --provider="RomegaDigital\Multitenancy\MultitenancyServiceProvider" --tag="migrations"
-```
-
 You can publish the config file with:
 
 ```bash
 php artisan vendor:publish --provider="RomegaDigital\Multitenancy\MultitenancyServiceProvider" --tag="config"
 ```
 
+Then run `multitenancy:install`, which will
+- `publish` and `migrate` required migrations
+- add a `Super Administrator` role
+- add an `admin` Tenant model
+
 ## Usage
 
-First, add the `RomegaDigital\Multitenancy\Traits\HasTenants` trait to your `User` model(s):
+First, add the `RomegaDigital\Multitenancy\Traits\HasTenants` and `Spatie\Permission\Traits\HasRoles` traits to your User model(s):
 
 ```php
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Permission\Traits\HasRoles;
 use RomegaDigital\Multitenancy\Traits\HasTenants;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use HasTenants;
+    use HasTenants, HasRoles;
 
     // ...
 }
@@ -97,7 +91,7 @@ Tenant::createMany([
 You can then attach users to the tenant:
 
 ```php
-Tenant::first()->save(factory(User::class)->create());
+Tenant::first()->save($user);
 ```
 
 ### Middleware
