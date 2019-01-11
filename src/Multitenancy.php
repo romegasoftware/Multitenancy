@@ -119,6 +119,24 @@ class Multitenancy
     }
 
     /**
+     * Determines how best to process the URL based
+     * on config and then returns the appropriate 
+     * subdomain text.
+     * 
+     * @return string
+     */
+    public function getCurrentSubDomain() : string
+    {
+        $baseURL = config('multitenancy.base_url');
+
+        if($baseURL != null){
+            return $this->getSubDomainBasedOnBaseURL($baseURL);
+        } else { 
+            return $this->getSubDomainBasedOnHTTPHost();
+        }
+    }
+
+    /**
      * Parses the request to pull out the first element separated
      * by `.` in the $_SERVER['HTTP_HOST'].
      *
@@ -128,7 +146,7 @@ class Multitenancy
      * 
      * @return string
      */
-    public function getCurrentSubDomain() : string
+    protected function getSubDomainBasedOnHTTPHost() : string
     {
         $currentDomain = app('request')->getHost();
 
@@ -140,6 +158,33 @@ class Multitenancy
         // Combine multiple level of domains into 1 string
         // ex: back to masterdomain.test
         $subdomain = implode($subdomains, '.');
+
+        return $subdomain;
+    }
+
+    /**
+     * Parses the request and removes the portion of the URL
+     * that matches the Base URL as defined in the config file.
+     *
+     * ex:
+     * baseURL = app.domain.com
+     * test2.app.domain.com returns test2
+     * 
+     * @return string
+     */
+    protected function getSubDomainBasedOnBaseURL(string $baseURL) : string
+    {
+        $currentDomain = app('request')->getHost();
+
+        //Remove the base domain from the currentDomain string
+        $subdomain = str_replace($baseURL, '', $currentDomain);
+
+        // If the last element is a period, remove it
+        // Necessary to run this check, incase we're 
+        // processing the base domain.
+        if(substr($subdomain, -1) == '.'){
+            $subdomain = substr($subdomain, 0, -1);
+        }
 
         return $subdomain;
     }
