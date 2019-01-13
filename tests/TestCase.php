@@ -2,13 +2,13 @@
 
 namespace RomegaDigital\Multitenancy\Tests;
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Orchestra\Testbench\TestCase as OrchestraTestCase;
+use Illuminate\Database\Schema\Blueprint;
 use RomegaDigital\Multitenancy\Contracts\Tenant;
-use RomegaDigital\Multitenancy\MultitenancyFacade;
-use RomegaDigital\Multitenancy\MultitenancyServiceProvider;
 use Spatie\Permission\PermissionServiceProvider;
+use RomegaDigital\Multitenancy\MultitenancyFacade;
+use Orchestra\Testbench\TestCase as OrchestraTestCase;
+use RomegaDigital\Multitenancy\MultitenancyServiceProvider;
 
 class TestCase extends OrchestraTestCase
 {
@@ -29,11 +29,10 @@ class TestCase extends OrchestraTestCase
         $app['config']->set('multitenancy.user_model', '\RomegaDigital\Multitenancy\Tests\User');
         $app['config']->set('database.default', 'testbench');
         $app['config']->set('database.connections.testbench', [
-            'driver'   => 'sqlite',
+            'driver' => 'sqlite',
             'database' => ':memory:',
-            'prefix'   => '',
+            'prefix' => '',
         ]);
-
     }
 
     /**
@@ -66,7 +65,7 @@ class TestCase extends OrchestraTestCase
     {
         parent::setUp();
 
-        if($this->setupTestDatabase){
+        if ($this->setupTestDatabase) {
             $this->setUpDatabase($this->app);
 
             $this->testUser = User::first();
@@ -83,7 +82,7 @@ class TestCase extends OrchestraTestCase
      */
     protected function setUpDatabase($app)
     {
-        $this->loadMigrationsFrom(realpath(__DIR__.'/../migrations'));
+        $this->loadMigrationsFrom(realpath(__DIR__ . '/../migrations'));
         $this->artisan('migrate')->run();
 
         $app[Tenant::class]->create([
