@@ -77,6 +77,7 @@ class MigrationMakeCommand extends GeneratorCommand
      *
      * @param  string  $name
      * @return string
+     *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     protected function buildClass($name)
@@ -115,6 +116,6 @@ class MigrationMakeCommand extends GeneratorCommand
         $timestamp = date('Y_m_d_His');
         $table = lcfirst($this->getNameInput());
 
-        return $this->laravel->databasePath() . "/migrations/{$timestamp}_add_tenancy_to_{$table}.php";
+        return $this->laravel->databasePath() . "/migrations/{$timestamp}_add_tenant_id_column_to_{$table}_table.php";
     }
 }

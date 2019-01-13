@@ -6,14 +6,6 @@ use RomegaDigital\Multitenancy\Tests\TestCase;
 
 class MigrateDatabaseTest extends TestCase
 {
-    /**
-     * Setup the test environment.
-     */
-    public function setUp(): void
-    {
-        parent::setUp();
-    }
-
     /** @test */
     public function it_runs_the_migrations()
     {

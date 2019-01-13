@@ -11,6 +11,7 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 class User extends Model implements AuthorizableContract, AuthenticatableContract
 {
     use HasRoles, Authorizable, Authenticatable;
+    
     /**
      * The attributes that are mass assignable.
      *

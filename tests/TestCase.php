@@ -2,6 +2,7 @@
 
 namespace RomegaDigital\Multitenancy\Tests;
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use RomegaDigital\Multitenancy\Contracts\Tenant;
 use Spatie\Permission\PermissionServiceProvider;
@@ -16,6 +17,8 @@ class TestCase extends OrchestraTestCase
     protected $testAdminTenant;
     protected $testProduct;
 
+    public $setupTestDatabase = true;
+
     /**
      * Set up the environment.
      *
@@ -24,6 +27,12 @@ class TestCase extends OrchestraTestCase
     protected function getEnvironmentSetUp($app)
     {
         $app['config']->set('multitenancy.user_model', '\RomegaDigital\Multitenancy\Tests\User');
+        $app['config']->set('database.default', 'testbench');
+        $app['config']->set('database.connections.testbench', [
+            'driver' => 'sqlite',
+            'database' => ':memory:',
+            'prefix' => '',
+        ]);
     }
 
     /**
@@ -36,7 +45,7 @@ class TestCase extends OrchestraTestCase
     {
         return [
             MultitenancyServiceProvider::class,
-            // PermissionServiceProvider::class
+            PermissionServiceProvider::class
         ];
     }
 
@@ -55,12 +64,15 @@ class TestCase extends OrchestraTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->setUpDatabase($this->app);
 
-        $this->testUser = User::first();
-        $this->testTenant = app(Tenant::class)->find(1);
-        $this->testAdminTenant = app(Tenant::class)->find(2);
-        $this->testProduct = Product::first();
+        if ($this->setupTestDatabase) {
+            $this->setUpDatabase($this->app);
+
+            $this->testUser = User::first();
+            $this->testTenant = app(Tenant::class)->find(1);
+            $this->testAdminTenant = app(Tenant::class)->find(2);
+            $this->testProduct = Product::first();
+        }
     }
 
     /**
@@ -70,9 +82,8 @@ class TestCase extends OrchestraTestCase
      */
     protected function setUpDatabase($app)
     {
-        include_once __DIR__ . '/../migrations/create_tenants_table.php.stub';
-
-        (new \CreateTenantsTable())->up();
+        $this->loadMigrationsFrom(realpath(__DIR__ . '/../migrations'));
+        $this->artisan('migrate')->run();
 
         $app[Tenant::class]->create([
             'name' => 'Tenant Name',
@@ -83,14 +94,14 @@ class TestCase extends OrchestraTestCase
             'domain' => 'admin'
         ]);
 
-        $app['db']->connection()->getSchemaBuilder()->create('users', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('email');
             $table->softDeletes();
         });
         User::create(['email' => 'test@user.com']);
 
-        $app['db']->connection()->getSchemaBuilder()->create('products', function (Blueprint $table) {
+        Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->unsignedInteger('tenant_id');
