@@ -8,6 +8,7 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
 use RomegaDigital\Multitenancy\Commands\InstallCommand;
 use RomegaDigital\Multitenancy\Commands\MigrationMakeCommand;
+use RomegaDigital\Multitenancy\Commands\AssignAdminPrivileges;
 use RomegaDigital\Multitenancy\Contracts\Tenant as TenantContract;
 
 class MultitenancyServiceProvider extends ServiceProvider
@@ -82,6 +83,7 @@ class MultitenancyServiceProvider extends ServiceProvider
         $this->commands([
             InstallCommand::class,
             MigrationMakeCommand::class,
+            AssignAdminPrivileges::class,
         ]);
     }
 

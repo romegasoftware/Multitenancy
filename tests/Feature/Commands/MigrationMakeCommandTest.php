@@ -17,6 +17,7 @@ class MigrationMakeCommandTest extends TestCase
             ->once();
 
         $this->artisan('multitenancy:migration', ['name' => 'testproducts'])
-            ->expectsOutput('Multitenancy migration created successfully.');
+            ->expectsOutput('Multitenancy migration created successfully.')
+            ->assertExitCode(1);
     }
 }

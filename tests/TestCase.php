@@ -33,6 +33,9 @@ class TestCase extends OrchestraTestCase
             'database' => ':memory:',
             'prefix' => '',
         ]);
+
+        $app['config']->set('auth.providers.users.model', config('multitenancy.user_model'));
+        $app['config']->set('auth.guards.web.provider', 'users');
     }
 
     /**

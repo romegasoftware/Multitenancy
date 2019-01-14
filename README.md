@@ -112,6 +112,12 @@ You can generate a migration to add tenancy to an existing model's table using
 php artisan multitenancy:migration products
 ```
 
+Assigning a user `Super Administration`-rights and the `admin` tenant can be done using
+
+```bash
+php artisan multitenancy:super-admin admin@test.com
+```
+
 ## Usage
 
 First, add the `RomegaDigital\Multitenancy\Traits\HasTenants` and `Spatie\Permission\Traits\HasRoles` traits to your User model(s):
