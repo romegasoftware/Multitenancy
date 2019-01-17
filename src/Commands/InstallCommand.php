@@ -91,7 +91,7 @@ class InstallCommand extends Command
         $this->info('Adding `Super Administrator` Role...');
 
         $this->call('permission:create-role', [
-            'name' => 'Super Administrator',
+            'name' => config('multitenancy.roles.super_admin'),
             'permissions' => 'access admin'
         ]);
 
