@@ -10,11 +10,11 @@ Any resources saved while accessing a scoped subdomain will automatically be sav
 
 - [Multitenancy Package](#multitenancy-package)
   - [Installation](#installation)
+  - [Usage](#usage)
     - [Middleware](#middleware)
     - [Tenant Assignment for Models](#tenant-assignment-for-models)
     - [Providing Access to Admin Domain](#providing-access-to-admin-domain)
   - [Console Commands](#console-commands)
-  - [Usage](#usage)
   - [Managing with Nova](#managing-with-nova)
 
 
@@ -51,6 +51,54 @@ It will:
 - `publish` and `migrate` required migrations
 - add a `Super Administrator` role and `can access admin` permission
 - add an `admin` Tenant model
+
+## Usage
+
+First, add the `RomegaDigital\Multitenancy\Traits\HasTenants` and `Spatie\Permission\Traits\HasRoles` traits to your User model(s):
+
+```php
+use Spatie\Permission\Traits\HasRoles;
+use RomegaDigital\Multitenancy\Traits\HasTenants;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+
+class User extends Authenticatable
+{
+    use HasTenants, HasRoles;
+
+    // ...
+}
+```
+
+The package relies on Eloquent, so you may access the User's tenants using `User::tenants()->get()`.
+
+Inversely, you may access the Tenant's users with `Tenant::users()->get()`.
+
+Tenants require a name to identify the tenant and and a subdomain that is associated with that user. 
+
+`tenant1.example.com`
+
+`tenant2.example.com`
+
+They would be added to the database like so:
+
+```php
+Tenant::createMany([
+    [
+        'name'    => 'An Identifying Name',
+        'domain'  => 'tenant1'
+    ],
+    [
+        'name'    => 'A Second Customer',
+        'domain'  => 'tenant2'
+    ]
+]);
+```
+
+You can then attach users to the tenant:
+
+```php
+Tenant::first()->save($user);
+```
 
 ### Middleware
 
@@ -116,54 +164,6 @@ Assigning a user `Super Administration` rights and the `admin` tenant can be don
 
 ```bash
 php artisan multitenancy:super-admin admin@example.com
-```
-
-## Usage
-
-First, add the `RomegaDigital\Multitenancy\Traits\HasTenants` and `Spatie\Permission\Traits\HasRoles` traits to your User model(s):
-
-```php
-use Spatie\Permission\Traits\HasRoles;
-use RomegaDigital\Multitenancy\Traits\HasTenants;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-
-class User extends Authenticatable
-{
-    use HasTenants, HasRoles;
-
-    // ...
-}
-```
-
-The package relies on Eloquent, so you may access the User's tenants using `User::tenants()->get()`.
-
-Inversely, you may access the Tenant's users with `Tenant::users()->get()`.
-
-Tenants require a name to identify the tenant and and a subdomain that is associated with that user. 
-
-`tenant1.example.com`
-
-`tenant2.example.com`
-
-They would be added to the database like so:
-
-```php
-Tenant::createMany([
-    [
-        'name'    => 'An Identifying Name',
-        'domain'  => 'tenant1'
-    ],
-    [
-        'name'    => 'A Second Customer',
-        'domain'  => 'tenant2'
-    ]
-]);
-```
-
-You can then attach users to the tenant:
-
-```php
-Tenant::first()->save($user);
 ```
 
 ## Managing with Nova
