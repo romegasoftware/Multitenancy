@@ -112,10 +112,10 @@ You can generate a migration to add tenancy to an existing model's table using
 php artisan multitenancy:migration products
 ```
 
-Assigning a user `Super Administration`-rights and the `admin` tenant can be done using
+Assigning a user `Super Administration` rights and the `admin` tenant can be done using
 
 ```bash
-php artisan multitenancy:super-admin admin@test.com
+php artisan multitenancy:super-admin admin@example.com
 ```
 
 ## Usage
