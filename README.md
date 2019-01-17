@@ -142,7 +142,7 @@ class Product extends Model
 
 ### Providing Access to Admin Domain
 
-In order to access the `admin.example.com` subdomain, a user will need the `access admin` permission. This package relies on [Spatie's Laravel Permission](https://github.com/spatie/laravel-permission) package and is automatically included as a dependency when installing this package. We also provide a `Super Administrator` role on migration that has the relevant permission already associated with it. You may simply assign the `Super Administrator` role to an admin user to provide the access they need. See their documentation on how to add users to the appropriate role and permission.
+In order to access the `admin.example.com` subdomain, a user will need the `access admin` permission. This package relies on [Spatie's Laravel Permission](https://github.com/spatie/laravel-permission) package and is automatically included as a dependency when installing this package. We also provide a `Super Administrator` role on migration that has the relevant permission already associated with it. You may simply assign the `Super Administrator` role to an admin user to provide the access they need. See the [Laravel Permission](https://github.com/spatie/laravel-permission) documentation on how to add users to the appropriate role and permission.
 
 The Admin Portal subdomain will automatically be created during [installation](#installation), but you can manually add it like this:
 
