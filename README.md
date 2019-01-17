@@ -107,7 +107,7 @@ This package comes with `TenantMiddleware` middleware. You can add it inside you
 ```php
 protected $routeMiddleware = [
     // ...
-    'tenant' => \RomegaDigital\Multitenancy\Middlewares\TenantMiddleware::class,
+    'tenant' => \RomegaDigital\Multitenancy\Middleware\TenantMiddleware::class,
 ];
 ```
 

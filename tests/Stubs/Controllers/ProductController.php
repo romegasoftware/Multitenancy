@@ -5,7 +5,7 @@ namespace RomegaDigital\Multitenancy\Tests\Stubs\Controllers;
 use Closure;
 use Illuminate\Http\Request;
 use PHPUnit\Framework\Assert;
-use RomegaDigital\Multitenancy\Middlewares\TenantMiddleware;
+use RomegaDigital\Multitenancy\Middleware\TenantMiddleware;
 use RomegaDigital\Multitenancy\Tests\Product;
 
 class ProductController extends \Illuminate\Routing\Controller
