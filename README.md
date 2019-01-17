@@ -2,7 +2,7 @@
 
 This package is meant to be a quick and easy way to add multitenancy to your Laravel application. It simply creates models and relationships for Tenants and models. The package identifies the incoming traffic by subdomain, and finds a corresponding tenant in the Tenant table. If none are found or the user is not associated with a particular subdomain, the user is met with a 403 error.
 
-The `admin` subdomain is reserved for the package. It is used to automatically remove all scopes from users with a `can access admin` permission.
+The `admin` subdomain is reserved for the package. It is used to automatically remove all scopes from users with a `access admin` permission.
 
 To scope a resource to the currently accessed subdomain, you simply need to add a [single trait](#tenant-assignment-for-other-models) to the model and add a [foreign key relationship](#console-commands) to the model's table. The package middleware will automatically apply the scopes for the relevant models.
 
@@ -49,7 +49,7 @@ php artisan multitenancy:install
 
 It will:
 - `publish` and `migrate` required migrations
-- add a `Super Administrator` role and `can access admin` permission
+- add a `Super Administrator` role and `access admin` permission
 - add an `admin` Tenant model
 
 ## Usage
@@ -141,7 +141,7 @@ If the user is assigned `Super Administrator` access, they will be able to acces
 
 ### Providing Access to Admin Domain
 
-In order to access the `admin.example.com` subdomain, a user will need the `can access admin` permission. This package relies on [Spatie's Laravel Permission](https://github.com/spatie/laravel-permission) package and is automatically included as a dependency when installing this package. We also provide a `Super Administrator` role on migration that has the relevant permission already associated with it. You may simply assign the `Super Administrator` role to an admin user to provide the access they need. See their documentation on how to add users to the appropriate role and permission.
+In order to access the `admin.example.com` subdomain, a user will need the `access admin` permission. This package relies on [Spatie's Laravel Permission](https://github.com/spatie/laravel-permission) package and is automatically included as a dependency when installing this package. We also provide a `Super Administrator` role on migration that has the relevant permission already associated with it. You may simply assign the `Super Administrator` role to an admin user to provide the access they need. See their documentation on how to add users to the appropriate role and permission.
 
 The Admin Portal subdomain will automatically be created during [installation](#installation), but you can manually add it like this:
 

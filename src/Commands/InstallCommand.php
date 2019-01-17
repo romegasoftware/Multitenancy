@@ -81,7 +81,7 @@ class InstallCommand extends Command
     }
 
     /**
-     * Creates a super admin role and 'can access admin'
+     * Creates a super admin role and 'access admin'
      * permission.
      *
      * @return void
@@ -92,7 +92,7 @@ class InstallCommand extends Command
 
         $this->call('permission:create-role', [
             'name' => 'Super Administrator',
-            'permissions' => 'can access admin'
+            'permissions' => 'access admin'
         ]);
 
         $this->line('');
