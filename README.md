@@ -137,7 +137,8 @@ class Product extends Model
 }
 ```
 
-If the user is assigned `Super Administrator` access, they will be able to access your `admin` subdomain and the tenant scope will not register. This allows you to manage all the data across all the instances without needing individual access to each Tenant's account.
+> **hint** 
+> If the user is assigned `Super Administrator` access, they will be able to access your `admin` subdomain and the tenant scope will not register. This allows you to manage all the data across all the instances without needing individual access to each Tenant's account.
 
 ### Providing Access to Admin Domain
 
