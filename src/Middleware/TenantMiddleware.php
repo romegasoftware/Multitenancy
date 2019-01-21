@@ -1,6 +1,6 @@
 <?php
 
-namespace RomegaDigital\Multitenancy\Middlewares;
+namespace RomegaDigital\Multitenancy\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;

@@ -5,7 +5,7 @@ namespace RomegaDigital\Multitenancy\Tests\Feature;
 use Illuminate\Http\Response;
 use RomegaDigital\Multitenancy\Exceptions\TenantDoesNotExist;
 use RomegaDigital\Multitenancy\Exceptions\UnauthorizedException;
-use RomegaDigital\Multitenancy\Middlewares\TenantMiddleware;
+use RomegaDigital\Multitenancy\Middleware\TenantMiddleware;
 use RomegaDigital\Multitenancy\Tests\TestCase;
 
 class MiddlewareTest extends TestCase

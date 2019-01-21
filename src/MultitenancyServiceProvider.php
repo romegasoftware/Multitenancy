@@ -31,7 +31,7 @@ class MultitenancyServiceProvider extends ServiceProvider
         $this->registerModelBindings();
 
         Gate::before(function ($user, $ability) {
-            if ($user->can('can access admin') && app('multitenancy')->getCurrentSubDomain() === 'admin') {
+            if ($user->can('access admin') && app('multitenancy')->getCurrentSubDomain() === 'admin') {
                 return true;
             }
         });

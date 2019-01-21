@@ -60,6 +60,8 @@ class MigrationMakeCommand extends GeneratorCommand
         parent::handle();
 
         $this->composer->dumpAutoloads();
+
+        return 1;
     }
 
     /**
