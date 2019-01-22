@@ -169,4 +169,4 @@ php artisan multitenancy:super-admin admin@example.com
 
 ## Managing with Nova
 
-There is a separate [Nova Package](https://github.com/bradenkeith/MultitenancyNovaTool) available that allows you to manage the resources utilized in this package in Nova.
+There is a separate [Nova Package](https://github.com/romegadigital/MultitenancyNovaTool) available that allows you to manage the resources utilized in this package in Nova.
