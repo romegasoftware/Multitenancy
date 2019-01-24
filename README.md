@@ -1,5 +1,7 @@
 # Multitenancy Package
 
+[![Total Downloads](https://img.shields.io/packagist/dt/romegadigital/multitenancy.svg?style=flat-square)](https://packagist.org/packages/romegadigital/multitenancy)
+
 This package is meant to be a quick and easy way to add multitenancy to your Laravel application. It simply creates models and relationships for Tenants and models. The package identifies incoming traffic by subdomain, and finds a corresponding tenant in the Tenant table. If none are found or the user is not associated with a particular subdomain, the user is met with a 403 error.
 
 The `admin` subdomain is reserved for the package. It is used to automatically remove all scopes from users with a `Super Administrator` role.
