@@ -49,6 +49,12 @@ class CreateTenantsTable extends Migration
     public function down()
     {
         $tableNames = config('multitenancy.table_names');
+
+        Schema::table($tableNames['tenant_user'], function (Blueprint $table) use ($tableNames) {
+            $table->dropForeign(['tenant_id']);
+            $table->dropForeign(['user_id']);
+        });
+        
         Schema::dropIfExists($tableNames['tenants']);
         Schema::dropIfExists($tableNames['tenant_user']);
     }
