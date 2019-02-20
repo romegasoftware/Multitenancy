@@ -2,6 +2,7 @@
 
 namespace RomegaDigital\Multitenancy\Tests\Feature\Commands;
 
+use RomegaDigital\Multitenancy\Commands\MigrationMakeCommand;
 use RomegaDigital\Multitenancy\Tests\TestCase;
 
 class MigrationMakeCommandTest extends TestCase
@@ -19,5 +20,18 @@ class MigrationMakeCommandTest extends TestCase
         $this->artisan('multitenancy:migration', ['name' => 'testproducts'])
             ->expectsOutput('Multitenancy migration created successfully.')
             ->assertExitCode(1);
+    }
+
+    /** @test **/
+    public function it_can_handle_multiword_names()
+    {
+        $this->mock(\Illuminate\Filesystem\Filesystem::class)
+            ->makePartial()
+            ->shouldReceive('put')
+            ->with(\Mockery::any(), \Mockery::pattern('/AddTenantIDColumnToTestNameTable/'))
+            ->once();
+
+        $this->artisan('multitenancy:migration', ['name' => 'test_name']);
+
     }
 }

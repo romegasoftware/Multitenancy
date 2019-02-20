@@ -2,9 +2,10 @@
 
 namespace RomegaDigital\Multitenancy\Commands;
 
-use Illuminate\Support\Composer;
-use Illuminate\Filesystem\Filesystem;
 use Illuminate\Console\GeneratorCommand;
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Composer;
+use Illuminate\Support\Str;
 
 class MigrationMakeCommand extends GeneratorCommand
 {
@@ -102,7 +103,7 @@ class MigrationMakeCommand extends GeneratorCommand
      */
     protected function replaceClass($stub, $name)
     {
-        $class = 'AddTenantIDColumnTo' . ucfirst($this->getNameInput()) . 'Table';
+        $class = 'AddTenantIDColumnTo' . Str::studly($this->getNameInput()) . 'Table';
 
         return str_replace('DummyClass', $class, $stub);
     }
