@@ -27,6 +27,8 @@ class MultitenancyServiceProvider extends ServiceProvider
             $this->registerPublishing($filesystem);
         }
 
+        $this->app->make('Illuminate\Database\Eloquent\Factory')->load(__DIR__ . '/Factories');
+
         $this->registerCommands();
         $this->registerModelBindings();
 
