@@ -8,7 +8,7 @@ use RomegaDigital\Multitenancy\Tests\TestCase;
 
 class TenantTest extends TestCase
 {
-	/** @test */
+    /** @test */
     public function it_throws_an_exception_if_domain_not_found()
     {
         $this->expectException(TenantDoesNotExist::class);

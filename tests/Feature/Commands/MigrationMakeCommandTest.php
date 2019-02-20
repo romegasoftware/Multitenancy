@@ -2,7 +2,6 @@
 
 namespace RomegaDigital\Multitenancy\Tests\Feature\Commands;
 
-use RomegaDigital\Multitenancy\Commands\MigrationMakeCommand;
 use RomegaDigital\Multitenancy\Tests\TestCase;
 
 class MigrationMakeCommandTest extends TestCase
@@ -32,6 +31,5 @@ class MigrationMakeCommandTest extends TestCase
             ->once();
 
         $this->artisan('multitenancy:migration', ['name' => 'test_name']);
-
     }
 }

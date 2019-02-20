@@ -15,8 +15,8 @@ class Tenant extends Model implements TenantContract
      * @var array
      */
     protected $fillable = [
-    	'name',
-    	'domain',
+        'name',
+        'domain',
     ];
 
     /**
@@ -45,19 +45,19 @@ class Tenant extends Model implements TenantContract
      * Find a Tenant by its domain.
      *
      * @param string $domain
-     * @return \RomegaDigital\Multitenancy\Contracts\Tenant
      *
      * @throws \RomegaDigital\Multitenancy\Exceptions\TenantDoesNotExist
+     *
+     * @return \RomegaDigital\Multitenancy\Contracts\Tenant
      */
     public static function findByDomain(string $domain): TenantContract
     {
         $tenant = static::where(['domain' => $domain])->first();
 
-        if (! $tenant) {
+        if (!$tenant) {
             throw TenantDoesNotExist::forDomain($domain);
         }
 
         return $tenant;
     }
-
 }
