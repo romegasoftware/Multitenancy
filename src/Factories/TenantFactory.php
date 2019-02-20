@@ -15,7 +15,7 @@ use Faker\Generator as Faker;
 
 $factory->define(\RomegaDigital\Multitenancy\Models\Tenant::class, function (Faker $faker) {
     return [
-        'name' => $faker->unique()->company,
+        'name'   => $faker->unique()->company,
         'domain' => $faker->unique()->word,
     ];
 });

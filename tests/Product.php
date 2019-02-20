@@ -1,4 +1,5 @@
 <?php
+
 namespace RomegaDigital\Multitenancy\Tests;
 
 use Illuminate\Database\Eloquent\Model;

@@ -2,7 +2,6 @@
 
 namespace RomegaDigital\Multitenancy\Traits;
 
-use Illuminate\Database\Eloquent\Builder;
 use RomegaDigital\Multitenancy\Multitenancy;
 
 trait BelongsToTenant
@@ -12,7 +11,7 @@ trait BelongsToTenant
      *
      * @var RomegaDigital\Multitenancy\Multitenancy
      */
-	protected static $multitenancy; 
+    protected static $multitenancy;
 
     /**
      * The "booting" method of the tenant model.
@@ -35,8 +34,8 @@ trait BelongsToTenant
      *
      * @return Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-	public function tenant()
-	{
-	    return $this->belongsTo(config('multitenancy.tenant_model'));
-	}
+    public function tenant()
+    {
+        return $this->belongsTo(config('multitenancy.tenant_model'));
+    }
 }

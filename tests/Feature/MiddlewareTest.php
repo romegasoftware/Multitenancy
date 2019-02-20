@@ -22,7 +22,8 @@ class MiddlewareTest extends TestCase
 
     protected function buildRequest($domain)
     {
-        app('request')->headers->set('HOST', $domain . '.example.com');
+        app('request')->headers->set('HOST', $domain.'.example.com');
+
         return $this->tenantMiddleware->handle(app('request'), function () {
             return (new Response())->setContent('<html></html>');
         });

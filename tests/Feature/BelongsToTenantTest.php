@@ -2,18 +2,16 @@
 
 namespace RomegaDigital\Multitenancy\Tests\Feature;
 
-use RomegaDigital\Multitenancy\Exceptions\TenantDoesNotExist;
 use RomegaDigital\Multitenancy\Models\Tenant;
 use RomegaDigital\Multitenancy\Tests\Product;
 use RomegaDigital\Multitenancy\Tests\TestCase;
 
 class BelongsToTenantTest extends TestCase
 {
-
     /**
      * Define environment setup.
      *
-     * @param  Illuminate\Foundation\Application  $app
+     * @param Illuminate\Foundation\Application $app
      *
      * @return void
      */
@@ -27,7 +25,8 @@ class BelongsToTenantTest extends TestCase
     /**
      * Turn the given URI into a fully qualified URL.
      *
-     * @param  string  $uri
+     * @param string $uri
+     *
      * @return string
      */
     protected function prepareUrlForRequest($uri)
@@ -49,7 +48,7 @@ class BelongsToTenantTest extends TestCase
         $response->assertStatus(201);
         $this->assertEquals(Product::first()->tenant_id, $this->testTenant->id);
     }
-    
+
     /** @test */
     public function it_only_retrieves_records_scoped_to_current_subdomain()
     {
@@ -57,11 +56,11 @@ class BelongsToTenantTest extends TestCase
         $this->testTenant->users()->save($this->testUser);
 
         Product::create([
-            'name' => 'Another Tenants Product',
+            'name'      => 'Another Tenants Product',
             'tenant_id' => Tenant::create([
-                'name' => 'Another Tenant',
-                'domain' => 'anotherdomain'
-            ])->id
+                'name'   => 'Another Tenant',
+                'domain' => 'anotherdomain',
+            ])->id,
         ]);
 
         $response = $this->get('products');
@@ -77,11 +76,11 @@ class BelongsToTenantTest extends TestCase
         $this->testTenant->domain = $this->testAdminTenant->domain;
 
         Product::create([
-            'name' => 'Another Tenants Product',
+            'name'      => 'Another Tenants Product',
             'tenant_id' => Tenant::create([
-                'name' => 'Another Tenant',
-                'domain' => 'anotherdomain'
-            ])->id
+                'name'   => 'Another Tenant',
+                'domain' => 'anotherdomain',
+            ])->id,
         ]);
 
         $response = $this->get('products');

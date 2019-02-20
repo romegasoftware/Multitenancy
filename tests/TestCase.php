@@ -2,13 +2,13 @@
 
 namespace RomegaDigital\Multitenancy\Tests;
 
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
-use RomegaDigital\Multitenancy\Contracts\Tenant;
-use Spatie\Permission\PermissionServiceProvider;
-use RomegaDigital\Multitenancy\MultitenancyFacade;
+use Illuminate\Support\Facades\Schema;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
+use RomegaDigital\Multitenancy\Contracts\Tenant;
+use RomegaDigital\Multitenancy\MultitenancyFacade;
 use RomegaDigital\Multitenancy\MultitenancyServiceProvider;
+use Spatie\Permission\PermissionServiceProvider;
 
 class TestCase extends OrchestraTestCase
 {
@@ -29,9 +29,9 @@ class TestCase extends OrchestraTestCase
         $app['config']->set('multitenancy.user_model', '\RomegaDigital\Multitenancy\Tests\User');
         $app['config']->set('database.default', 'testbench');
         $app['config']->set('database.connections.testbench', [
-            'driver' => 'sqlite',
+            'driver'   => 'sqlite',
             'database' => ':memory:',
-            'prefix' => '',
+            'prefix'   => '',
         ]);
 
         $app['config']->set('auth.providers.users.model', config('multitenancy.user_model'));
@@ -39,8 +39,9 @@ class TestCase extends OrchestraTestCase
     }
 
     /**
-     * Load package service provider
-     * @param  \Illuminate\Foundation\Application $app
+     * Load package service provider.
+     *
+     * @param \Illuminate\Foundation\Application $app
      *
      * @return array
      */
@@ -48,13 +49,15 @@ class TestCase extends OrchestraTestCase
     {
         return [
             MultitenancyServiceProvider::class,
-            PermissionServiceProvider::class
+            PermissionServiceProvider::class,
         ];
     }
 
     /**
-     * Load package alias
-     * @param  \Illuminate\Foundation\Application $app
+     * Load package alias.
+     *
+     * @param \Illuminate\Foundation\Application $app
+     *
      * @return array
      */
     protected function getPackageAliases($app)
@@ -85,16 +88,16 @@ class TestCase extends OrchestraTestCase
      */
     protected function setUpDatabase($app)
     {
-        $this->loadMigrationsFrom(realpath(__DIR__ . '/../migrations'));
+        $this->loadMigrationsFrom(realpath(__DIR__.'/../migrations'));
         $this->artisan('migrate')->run();
 
         $app[Tenant::class]->create([
-            'name' => 'Tenant Name',
-            'domain' => 'masterdomain'
+            'name'   => 'Tenant Name',
+            'domain' => 'masterdomain',
         ]);
         $app[Tenant::class]->create([
-            'name' => 'Admin',
-            'domain' => 'admin'
+            'name'   => 'Admin',
+            'domain' => 'admin',
         ]);
 
         Schema::create('users', function (Blueprint $table) {
@@ -115,8 +118,8 @@ class TestCase extends OrchestraTestCase
             $table->softDeletes();
         });
         Product::create([
-            'name' => 'Product 1',
-            'tenant_id' => '1'
+            'name'      => 'Product 1',
+            'tenant_id' => '1',
         ]);
     }
 }

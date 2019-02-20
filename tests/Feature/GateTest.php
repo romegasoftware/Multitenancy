@@ -3,7 +3,6 @@
 namespace RomegaDigital\Multitenancy\Tests\Feature;
 
 use Illuminate\Support\Facades\Gate;
-use RomegaDigital\Multitenancy\Exceptions\TenantDoesNotExist;
 use RomegaDigital\Multitenancy\Models\Tenant;
 use RomegaDigital\Multitenancy\Tests\Product;
 use RomegaDigital\Multitenancy\Tests\ProductPolicy;
@@ -12,11 +11,10 @@ use Spatie\Permission\Models\Role;
 
 class GateTest extends TestCase
 {
-
     /**
      * Define environment setup.
      *
-     * @param  Illuminate\Foundation\Application  $app
+     * @param Illuminate\Foundation\Application $app
      *
      * @return void
      */
@@ -32,7 +30,8 @@ class GateTest extends TestCase
     /**
      * Turn the given URI into a fully qualified URL.
      *
-     * @param  string  $uri
+     * @param string $uri
+     *
      * @return string
      */
     protected function prepareUrlForRequest($uri)
@@ -49,14 +48,14 @@ class GateTest extends TestCase
         $this->testAdminTenant->users()->save($this->testUser);
 
         $product = Product::create([
-            'name' => 'Another Tenants Product',
+            'name'      => 'Another Tenants Product',
             'tenant_id' => Tenant::create([
-                'name' => 'Another Tenant',
-                'domain' => 'anotherdomain'
-            ])->id
+                'name'   => 'Another Tenant',
+                'domain' => 'anotherdomain',
+            ])->id,
         ]);
 
-        $response = $this->get('products/' . $product->id);
+        $response = $this->get('products/'.$product->id);
 
         $response->assertForbidden();
     }
@@ -69,14 +68,14 @@ class GateTest extends TestCase
         $this->testUser->assignRole('Super Administrator');
 
         $product = Product::create([
-            'name' => 'Another Tenants Product',
+            'name'      => 'Another Tenants Product',
             'tenant_id' => Tenant::create([
-                'name' => 'Another Tenant',
-                'domain' => 'anotherdomain'
-            ])->id
+                'name'   => 'Another Tenant',
+                'domain' => 'anotherdomain',
+            ])->id,
         ]);
 
-        $response = $this->get('products/' . $product->id);
+        $response = $this->get('products/'.$product->id);
 
         $response->assertForbidden();
     }
@@ -90,16 +89,15 @@ class GateTest extends TestCase
         $this->testAdminTenant->users()->save($this->testUser);
 
         $product = Product::create([
-            'name' => 'Another Tenants Product',
+            'name'      => 'Another Tenants Product',
             'tenant_id' => Tenant::create([
-                'name' => 'Another Tenant',
-                'domain' => 'anotherdomain'
-            ])->id
+                'name'   => 'Another Tenant',
+                'domain' => 'anotherdomain',
+            ])->id,
         ]);
 
-        $response = $this->get('products/' . $product->id);
+        $response = $this->get('products/'.$product->id);
 
         $response->assertOK();
     }
-
 }

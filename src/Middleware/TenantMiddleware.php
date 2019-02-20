@@ -4,9 +4,9 @@ namespace RomegaDigital\Multitenancy\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use RomegaDigital\Multitenancy\Multitenancy;
 use RomegaDigital\Multitenancy\Contracts\Tenant;
 use RomegaDigital\Multitenancy\Exceptions\UnauthorizedException;
+use RomegaDigital\Multitenancy\Multitenancy;
 
 class TenantMiddleware
 {
@@ -30,9 +30,10 @@ class TenantMiddleware
      *
      * @param \Illuminate\Http\Request $request
      * @param \Closure                 $next
-     * @return mixed
      *
      * @throws \RomegaDigital\Multitenancy\Exceptions\UnauthorizedException
+     *
+     * @return mixed
      */
     public function handle(Request $request, Closure $next)
     {
@@ -55,7 +56,8 @@ class TenantMiddleware
      * Check if user is authorized to access tenant's domain.
      *
      * @param \RomegaDigital\Multitenancy\Contracts\Tenant $tenant
-     * @return boolean
+     *
+     * @return bool
      */
     protected function authorizedToAccessTenant(Tenant $tenant)
     {

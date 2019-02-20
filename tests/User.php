@@ -3,12 +3,12 @@
 namespace RomegaDigital\Multitenancy\Tests;
 
 use Illuminate\Auth\Authenticatable;
-use Spatie\Permission\Traits\HasRoles;
-use Illuminate\Database\Eloquent\Model;
-use RomegaDigital\Multitenancy\Traits\HasTenants;
-use Illuminate\Foundation\Auth\Access\Authorizable;
-use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\Access\Authorizable;
+use RomegaDigital\Multitenancy\Traits\HasTenants;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Model implements AuthorizableContract, AuthenticatableContract
 {

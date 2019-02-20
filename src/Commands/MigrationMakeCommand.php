@@ -40,8 +40,9 @@ class MigrationMakeCommand extends GeneratorCommand
     /**
      * Create a new command instance.
      *
-     * @param  \Illuminate\Filesystem\Filesystem  $files
-     * @param  \Illuminate\Support\Composer  $composer
+     * @param \Illuminate\Filesystem\Filesystem $files
+     * @param \Illuminate\Support\Composer      $composer
+     *
      * @return void
      */
     public function __construct(Filesystem $files, Composer $composer)
@@ -72,16 +73,17 @@ class MigrationMakeCommand extends GeneratorCommand
      */
     protected function getStub()
     {
-        return __DIR__ . '/stubs/add_tenancy_to_table.stub';
+        return __DIR__.'/stubs/add_tenancy_to_table.stub';
     }
 
     /**
      * Build the class with the given name.
      *
-     * @param  string  $name
-     * @return string
+     * @param string $name
      *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     *
+     * @return string
      */
     protected function buildClass($name)
     {
@@ -97,13 +99,14 @@ class MigrationMakeCommand extends GeneratorCommand
     /**
      * Replace the class name for the given stub.
      *
-     * @param  string  $stub
-     * @param  string  $name
+     * @param string $stub
+     * @param string $name
+     *
      * @return string
      */
     protected function replaceClass($stub, $name)
     {
-        $class = 'AddTenantIDColumnTo' . Str::studly($this->getNameInput()) . 'Table';
+        $class = 'AddTenantIDColumnTo'.Str::studly($this->getNameInput()).'Table';
 
         return str_replace('DummyClass', $class, $stub);
     }
@@ -111,7 +114,8 @@ class MigrationMakeCommand extends GeneratorCommand
     /**
      * Get the destination class path.
      *
-     * @param  string  $name
+     * @param string $name
+     *
      * @return string
      */
     protected function getPath($name)
@@ -119,6 +123,6 @@ class MigrationMakeCommand extends GeneratorCommand
         $timestamp = date('Y_m_d_His');
         $table = lcfirst($this->getNameInput());
 
-        return $this->laravel->databasePath() . "/migrations/{$timestamp}_add_tenant_id_column_to_{$table}_table.php";
+        return $this->laravel->databasePath()."/migrations/{$timestamp}_add_tenant_id_column_to_{$table}_table.php";
     }
 }
