@@ -162,7 +162,7 @@ class Multitenancy
 
         // Combine multiple level of domains into 1 string
         // ex: back to masterdomain.test
-        $subdomain = implode($subdomains, '.');
+        $subdomain = implode('.', $subdomains);
 
         return $subdomain;
     }
