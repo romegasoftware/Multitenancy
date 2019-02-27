@@ -73,8 +73,8 @@ class Multitenancy
             return;
         }
 
-        $model->addGlobalScope('tenant', function (Builder $builder) {
-            $builder->where('tenant_id', '=', $this->tenant->id);
+        $model->addGlobalScope('tenant', function (Builder $builder) use ($model) {
+            $builder->where($model->qualifyColumn('tenant_id'), '=', $this->tenant->id);
         });
     }
 
