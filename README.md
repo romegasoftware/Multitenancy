@@ -96,10 +96,11 @@ Tenant::createMany([
 ]);
 ```
 
-You can then attach users to the Tenant:
+You can then attach user models to the Tenant:
 
 ```php
-Tenant::first()->save($user);
+$user = User::first();
+Tenant::first()->users()->save($user);
 ```
 
 ### Middleware
