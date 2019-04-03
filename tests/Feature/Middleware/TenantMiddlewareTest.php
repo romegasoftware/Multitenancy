@@ -1,19 +1,17 @@
 <?php
 
-namespace RomegaDigital\Multitenancy\Tests\Feature;
+namespace RomegaDigital\Multitenancy\Tests\Feature\Middleware;
 
 use Illuminate\Http\Response;
+use Illuminate\Auth\AuthenticationException;
+use RomegaDigital\Multitenancy\Tests\TestCase;
+use RomegaDigital\Multitenancy\Middleware\TenantMiddleware;
 use RomegaDigital\Multitenancy\Exceptions\TenantDoesNotExist;
 use RomegaDigital\Multitenancy\Exceptions\UnauthorizedException;
-use RomegaDigital\Multitenancy\Middleware\TenantMiddleware;
-use RomegaDigital\Multitenancy\Tests\TestCase;
-use Illuminate\Auth\AuthenticationException;
 
-class MiddlewareTest extends TestCase
+class TenantMiddlewareTest extends TestCase
 {
     protected $tenantMiddleware;
-    protected $permissionMiddleware;
-    protected $roleOrPermissionMiddleware;
 
     /**
      * Define environment setup.
