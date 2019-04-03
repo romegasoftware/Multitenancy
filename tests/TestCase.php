@@ -29,9 +29,9 @@ class TestCase extends OrchestraTestCase
         $app['config']->set('multitenancy.user_model', '\RomegaDigital\Multitenancy\Tests\User');
         $app['config']->set('database.default', 'testbench');
         $app['config']->set('database.connections.testbench', [
-            'driver'   => 'sqlite',
+            'driver' => 'sqlite',
             'database' => ':memory:',
-            'prefix'   => '',
+            'prefix' => '',
         ]);
 
         $app['config']->set('auth.providers.users.model', config('multitenancy.user_model'));
@@ -67,7 +67,7 @@ class TestCase extends OrchestraTestCase
         ];
     }
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -88,15 +88,15 @@ class TestCase extends OrchestraTestCase
      */
     protected function setUpDatabase($app)
     {
-        $this->loadMigrationsFrom(realpath(__DIR__.'/../migrations'));
+        $this->loadMigrationsFrom(realpath(__DIR__ . '/../migrations'));
         $this->artisan('migrate')->run();
 
         $app[Tenant::class]->create([
-            'name'   => 'Tenant Name',
+            'name' => 'Tenant Name',
             'domain' => 'masterdomain',
         ]);
         $app[Tenant::class]->create([
-            'name'   => 'Admin',
+            'name' => 'Admin',
             'domain' => 'admin',
         ]);
 
@@ -118,7 +118,7 @@ class TestCase extends OrchestraTestCase
             $table->softDeletes();
         });
         Product::create([
-            'name'      => 'Product 1',
+            'name' => 'Product 1',
             'tenant_id' => '1',
         ]);
     }

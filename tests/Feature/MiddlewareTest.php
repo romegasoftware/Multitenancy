@@ -14,7 +14,7 @@ class MiddlewareTest extends TestCase
     protected $permissionMiddleware;
     protected $roleOrPermissionMiddleware;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->tenantMiddleware = new TenantMiddleware(app('multitenancy'));
@@ -22,7 +22,7 @@ class MiddlewareTest extends TestCase
 
     protected function buildRequest($domain)
     {
-        app('request')->headers->set('HOST', $domain.'.example.com');
+        app('request')->headers->set('HOST', $domain . '.example.com');
 
         return $this->tenantMiddleware->handle(app('request'), function () {
             return (new Response())->setContent('<html></html>');
