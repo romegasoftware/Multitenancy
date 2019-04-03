@@ -3,7 +3,6 @@
 namespace RomegaDigital\Multitenancy\Middleware;
 
 use Closure;
-use Illuminate\Http\Request;
 use RomegaDigital\Multitenancy\Multitenancy;
 use Illuminate\Contracts\Auth\Factory as Auth;
 use RomegaDigital\Multitenancy\Contracts\Tenant;
