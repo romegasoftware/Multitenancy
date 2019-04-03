@@ -39,7 +39,7 @@ class TenantMiddleware extends Middleware
     protected function redirectTo($request)
     {
         if (!$request->expectsJson()) {
-            return route('login');
+            return route(config('multitenancy.redirect_route'));
         }
     }
 

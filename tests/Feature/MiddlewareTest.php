@@ -28,7 +28,7 @@ class MiddlewareTest extends TestCase
 
         $app['router']->get('/login', function () {
             return 'login';
-        })->name('login');
+        })->name(config('multitenancy.redirect_route'));
     }
 
     public function setUp(): void

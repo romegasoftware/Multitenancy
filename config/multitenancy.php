@@ -74,4 +74,14 @@ return [
 
         'tenant_user' => 'tenant_user',
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Redirect Route
+    |--------------------------------------------------------------------------
+    |
+    | This is the name of the route users who aren't logged in will be redirected to
+    */
+
+    'redirect_route' => 'login',
 ];
