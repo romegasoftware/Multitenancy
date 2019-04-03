@@ -39,7 +39,7 @@ return [
     */
 
     'roles' => [
-        'super_admin' => 'Super Administrator'
+        'super_admin' => 'Super Administrator',
     ],
 
     /*

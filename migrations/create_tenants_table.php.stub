@@ -16,22 +16,22 @@ class CreateTenantsTable extends Migration
         $tableNames = config('multitenancy.table_names');
 
         Schema::create($tableNames['tenants'], function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('name')->unique();
             $table->string('domain')->unique();
             $table->timestamps();
         });
 
         Schema::create($tableNames['tenant_user'], function (Blueprint $table) use ($tableNames) {
-            $table->increments('id');
+            $table->bigIncrements('id');
 
-            $table->unsignedInteger('tenant_id');
+            $table->unsignedBigInteger('tenant_id');
             $table->foreign('tenant_id')
                 ->references('id')
                 ->on($tableNames['tenants'])
                 ->onDelete('cascade');
 
-            $table->unsignedInteger('user_id');
+            $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')
                 ->references('id')
                 ->on($tableNames['users'])
@@ -49,6 +49,12 @@ class CreateTenantsTable extends Migration
     public function down()
     {
         $tableNames = config('multitenancy.table_names');
+
+        Schema::table($tableNames['tenant_user'], function (Blueprint $table) use ($tableNames) {
+            $table->dropForeign(['tenant_id']);
+            $table->dropForeign(['user_id']);
+        });
+        
         Schema::dropIfExists($tableNames['tenants']);
         Schema::dropIfExists($tableNames['tenant_user']);
     }

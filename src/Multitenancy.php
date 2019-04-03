@@ -2,8 +2,8 @@
 
 namespace RomegaDigital\Multitenancy;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use RomegaDigital\Multitenancy\Contracts\Tenant;
 
 class Multitenancy
@@ -43,6 +43,7 @@ class Multitenancy
      * Sets the Tenant to a Tenant Model.
      *
      * @param RomegaDigital\Multitenancy\Contracts\Tenant $tenant
+     *
      * @return $this
      */
     public function setTenant(Tenant $tenant)
@@ -57,12 +58,14 @@ class Multitenancy
      * store for deferment.
      *
      * @param Illuminate\Database\Eloquent\Model $model
+     *
      * @return void|null
      */
     public function applyTenantScope(Model $model)
     {
         if (is_null($this->tenant)) {
             $this->deferredModels->push($model);
+
             return;
         }
 
@@ -70,8 +73,8 @@ class Multitenancy
             return;
         }
 
-        $model->addGlobalScope('tenant', function (Builder $builder) {
-            $builder->where('tenant_id', '=', $this->tenant->id);
+        $model->addGlobalScope('tenant', function (Builder $builder) use ($model) {
+            $builder->where($model->qualifyColumn('tenant_id'), '=', $this->tenant->id);
         });
     }
 
@@ -79,12 +82,14 @@ class Multitenancy
      * Applies applicable tenant id to model on create.
      *
      * @param Illuminate\Database\Eloquent\Model $model
+     *
      * @return void|null
      */
     public function newModel(Model $model)
     {
         if (is_null($this->tenant)) {
             $this->deferredModels->push($model);
+
             return;
         }
 
@@ -120,18 +125,18 @@ class Multitenancy
 
     /**
      * Determines how best to process the URL based
-     * on config and then returns the appropriate 
+     * on config and then returns the appropriate
      * subdomain text.
-     * 
+     *
      * @return string
      */
     public function getCurrentSubDomain() : string
     {
         $baseURL = config('multitenancy.base_url');
 
-        if($baseURL != null){
+        if ($baseURL != null) {
             return $this->getSubDomainBasedOnBaseURL($baseURL);
-        } else { 
+        } else {
             return $this->getSubDomainBasedOnHTTPHost();
         }
     }
@@ -143,7 +148,7 @@ class Multitenancy
      * ex:
      * test.domain.com returns test
      * test2.test.domain.com returns test2
-     * 
+     *
      * @return string
      */
     protected function getSubDomainBasedOnHTTPHost() : string
@@ -157,7 +162,7 @@ class Multitenancy
 
         // Combine multiple level of domains into 1 string
         // ex: back to masterdomain.test
-        $subdomain = implode($subdomains, '.');
+        $subdomain = implode('.', $subdomains);
 
         return $subdomain;
     }
@@ -169,7 +174,7 @@ class Multitenancy
      * ex:
      * baseURL = app.domain.com
      * test2.app.domain.com returns test2
-     * 
+     *
      * @return string
      */
     protected function getSubDomainBasedOnBaseURL(string $baseURL) : string
@@ -180,9 +185,9 @@ class Multitenancy
         $subdomain = str_replace($baseURL, '', $currentDomain);
 
         // If the last element is a period, remove it
-        // Necessary to run this check, incase we're 
+        // Necessary to run this check, incase we're
         // processing the base domain.
-        if(substr($subdomain, -1) == '.'){
+        if (substr($subdomain, -1) == '.') {
             $subdomain = substr($subdomain, 0, -1);
         }
 

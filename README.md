@@ -1,8 +1,10 @@
 # Multitenancy Package
 
+[![Total Downloads](https://img.shields.io/packagist/dt/romegadigital/multitenancy.svg?style=flat-square)](https://packagist.org/packages/romegadigital/multitenancy)
+
 This package is meant to be a quick and easy way to add multitenancy to your Laravel application. It simply creates models and relationships for Tenants and models. The package identifies incoming traffic by subdomain, and finds a corresponding tenant in the Tenant table. If none are found or the user is not associated with a particular subdomain, the user is met with a 403 error.
 
-The `admin` subdomain is reserved for the package. It is used to automatically remove all scopes from users with an `access admin` permission.
+The `admin` subdomain is reserved for the package. It is used to automatically remove all scopes from users with a `Super Administrator` role.
 
 To scope a resource to the currently accessed subdomain, you simply need to add a [single trait](#tenant-assignment-for-models) to the model and add a [foreign key relationship](#console-commands) to the model's table. The package middleware will automatically apply the scopes for the relevant models.
 
@@ -169,4 +171,4 @@ php artisan multitenancy:super-admin admin@example.com
 
 ## Managing with Nova
 
-There is a separate [Nova Package](https://github.com/bradenkeith/MultitenancyNovaTool) available that allows you to manage the resources utilized in this package in Nova.
+There is a separate [Nova Package](https://github.com/romegadigital/MultitenancyNovaTool) available that allows you to manage the resources utilized in this package in Nova.

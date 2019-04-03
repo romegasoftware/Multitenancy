@@ -3,11 +3,11 @@
 namespace RomegaDigital\Multitenancy\Commands;
 
 use Illuminate\Console\Command;
-use Spatie\Permission\Models\Role;
-use RomegaDigital\Multitenancy\Multitenancy;
 use RomegaDigital\Multitenancy\Contracts\Tenant;
-use Spatie\Permission\Exceptions\RoleDoesNotExist;
 use RomegaDigital\Multitenancy\Exceptions\TenantDoesNotExist;
+use RomegaDigital\Multitenancy\Multitenancy;
+use Spatie\Permission\Exceptions\RoleDoesNotExist;
+use Spatie\Permission\Models\Role;
 
 class AssignAdminPrivileges extends Command
 {
@@ -59,7 +59,7 @@ class AssignAdminPrivileges extends Command
         $identifier = $this->argument('identifier');
 
         if (!class_exists($userModel)) {
-            return $this->error('User model ' . $userModel . ' can not be found!');
+            return $this->error('User model '.$userModel.' can not be found!');
         }
 
         if (!$user = $this->getUser($userModel, $column, $identifier)) {
@@ -77,7 +77,8 @@ class AssignAdminPrivileges extends Command
         $user->assignRole($adminRole);
         $user->tenants()->save($adminTenant);
 
-        $this->info('User with ' . $column . ' ' . $user->{$column} . ' granted Super-Administration rights.');
+        $this->info('User with '.$column.' '.$user->{$column}.' granted Super-Administration rights.');
+
         return 1;
     }
 
@@ -131,10 +132,10 @@ class AssignAdminPrivileges extends Command
      * Cancel the command due to errors.
      *
      * @param Illuminate\Database\Eloquent\Model $model
-     * @param string $column
-     * @param string $identifier
+     * @param string                             $column
+     * @param string                             $identifier
      *
-     * @return boolean
+     * @return bool
      */
     protected function cancel($model, $column, $identifier)
     {
@@ -149,8 +150,9 @@ class AssignAdminPrivileges extends Command
      * Write an error for a model which can not be found.
      *
      * @param Illuminate\Database\Eloquent\Model $model
-     * @param string $column
-     * @param string $identifier
+     * @param string                             $column
+     * @param string                             $identifier
+     *
      * @return void
      */
     protected function modelNotFound($model, $column, $identifier)

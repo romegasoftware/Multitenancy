@@ -65,12 +65,12 @@ class InstallCommand extends Command
 
         $this->callSilent('vendor:publish', [
             '--provider' => 'Spatie\Permission\PermissionServiceProvider',
-            '--tag' => ['migrations']
+            '--tag'      => ['migrations'],
         ]);
 
         $this->callSilent('vendor:publish', [
             '--provider' => 'RomegaDigital\Multitenancy\MultitenancyServiceProvider',
-            '--tag' => ['migrations']
+            '--tag'      => ['migrations'],
         ]);
 
         $this->info('Migrations published!');
@@ -91,8 +91,8 @@ class InstallCommand extends Command
         $this->info('Adding `Super Administrator` Role...');
 
         $this->call('permission:create-role', [
-            'name' => config('multitenancy.roles.super_admin'),
-            'permissions' => 'access admin'
+            'name'        => config('multitenancy.roles.super_admin'),
+            'permissions' => 'access admin',
         ]);
 
         $this->line('');
@@ -108,8 +108,8 @@ class InstallCommand extends Command
         $this->info('Adding `admin` domain...');
 
         $this->multitenancy->getTenantClass()::create([
-            'name' => 'Admin Portal',
-            'domain' => 'admin'
+            'name'   => 'Admin Portal',
+            'domain' => 'admin',
         ]);
 
         $this->info('Admin domain added successfully!');
