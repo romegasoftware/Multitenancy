@@ -14,6 +14,8 @@ Any resources saved while accessing a scoped subdomain will automatically be sav
   - [Installation](#installation)
   - [Usage](#usage)
     - [Middleware](#middleware)
+      - [Authenticated](#authenticated)
+      - [Guest Tenant](#guest-tenant)
     - [Tenant Assignment for Models](#tenant-assignment-for-models)
     - [Providing Access to Admin Domain](#providing-access-to-admin-domain)
   - [Console Commands](#console-commands)
@@ -104,19 +106,38 @@ Tenant::first()->save($user);
 
 ### Middleware
 
-This package comes with `TenantMiddleware` middleware. You can add it inside your `app/Http/Kernel.php` file.
+#### Authenticated
+This package comes with `TenantMiddleware` middleware which extends Laravel's `Illuminate\Auth\Middleware\Authenticate`. You can add it inside your `app/Http/Kernel.php` file.
 
 ```php
 protected $routeMiddleware = [
     // ...
-    'tenant' => \RomegaDigital\Multitenancy\Middleware\TenantMiddleware::class,
+    'tenant.auth' => \RomegaDigital\Multitenancy\Middleware\TenantMiddleware::class,
 ];
 ```
 
 Then you can bring multitenancy to your routes using middleware rules:
 
 ```php
-Route::group(['middleware' => ['tenant']], function () {
+Route::group(['middleware' => ['tenant.auth']], function () {
+    // ...
+});
+```
+
+#### Guest Tenant
+This package comes with `GuestTenantMiddleware` middleware which applies the tenant scope to all models and can be used for allowing guest users to access Tenant related pages. You can add it inside your `app/Http/Kernel.php` file.
+
+```php
+protected $routeMiddleware = [
+    // ...
+    'tenant.guest' => \RomegaDigital\Multitenancy\Middleware\GuestTenantMiddleware::class,
+];
+```
+
+Then you can bring multitenancy to your routes using middleware rules:
+
+```php
+Route::group(['middleware' => ['tenant.guest']], function () {
     // ...
 });
 ```
