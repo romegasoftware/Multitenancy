@@ -3,12 +3,13 @@
 namespace RomegaDigital\Multitenancy\Middleware;
 
 use Closure;
-use Illuminate\Http\Request;
-use RomegaDigital\Multitenancy\Contracts\Tenant;
-use RomegaDigital\Multitenancy\Exceptions\UnauthorizedException;
 use RomegaDigital\Multitenancy\Multitenancy;
+use Illuminate\Contracts\Auth\Factory as Auth;
+use RomegaDigital\Multitenancy\Contracts\Tenant;
+use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use RomegaDigital\Multitenancy\Exceptions\UnauthorizedException;
 
-class TenantMiddleware
+class TenantMiddleware extends Middleware
 {
     /**
      * @var RomegaDigital\Multitenancy\Multitenancy
@@ -18,11 +19,27 @@ class TenantMiddleware
     /**
      * Create new TenantMiddleware instance.
      *
+     * @param Illuminate\Contracts\Auth\Factory $auth
      * @param RomegaDigital\Multitenancy\Multitenancy $multitenancy
      */
-    public function __construct(Multitenancy $multitenancy)
+    public function __construct(Auth $auth, Multitenancy $multitenancy)
     {
+        parent::__construct($auth);
+
         $this->multitenancy = $multitenancy;
+    }
+
+    /**
+     * Get the path the user should be redirected to when they are not authenticated.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return string
+     */
+    protected function redirectTo($request)
+    {
+        if (!$request->expectsJson()) {
+            return route(config('multitenancy.redirect_route'));
+        }
     }
 
     /**
@@ -30,16 +47,15 @@ class TenantMiddleware
      *
      * @param \Illuminate\Http\Request $request
      * @param \Closure                 $next
+     * @param string[] ...$guards
      *
-     * @throws \RomegaDigital\Multitenancy\Exceptions\UnauthorizedException
+     * @throws \RomegaDigital\Multitenancy\Exceptions\UnauthorizedException|\Illuminate\Auth\AuthenticationException
      *
      * @return mixed
      */
-    public function handle(Request $request, Closure $next)
+    public function handle($request, Closure $next, ...$guards)
     {
-        if (auth()->guest()) {
-            throw UnauthorizedException::notLoggedIn();
-        }
+        $this->authenticate($request, $guards);
 
         $tenant = $this->multitenancy->receiveTenantFromRequest();
 

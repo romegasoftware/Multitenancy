@@ -1,28 +1,44 @@
 <?php
 
-namespace RomegaDigital\Multitenancy\Tests\Feature;
+namespace RomegaDigital\Multitenancy\Tests\Feature\Middleware;
 
 use Illuminate\Http\Response;
+use Illuminate\Auth\AuthenticationException;
+use RomegaDigital\Multitenancy\Tests\TestCase;
+use RomegaDigital\Multitenancy\Middleware\TenantMiddleware;
 use RomegaDigital\Multitenancy\Exceptions\TenantDoesNotExist;
 use RomegaDigital\Multitenancy\Exceptions\UnauthorizedException;
-use RomegaDigital\Multitenancy\Middleware\TenantMiddleware;
-use RomegaDigital\Multitenancy\Tests\TestCase;
 
-class MiddlewareTest extends TestCase
+class TenantMiddlewareTest extends TestCase
 {
     protected $tenantMiddleware;
-    protected $permissionMiddleware;
-    protected $roleOrPermissionMiddleware;
 
-    public function setUp()
+    /**
+     * Define environment setup.
+     *
+     * @param Illuminate\Foundation\Application $app
+     *
+     * @return void
+     */
+    protected function getEnvironmentSetUp($app)
+    {
+        parent::getEnvironmentSetUp($app);
+
+        $app['router']->get('/login', function () {
+            return 'login';
+        })->name(config('multitenancy.redirect_route'));
+    }
+
+    public function setUp(): void
     {
         parent::setUp();
-        $this->tenantMiddleware = new TenantMiddleware(app('multitenancy'));
+
+        $this->tenantMiddleware = new TenantMiddleware(app('auth'), app('multitenancy'));
     }
 
     protected function buildRequest($domain)
     {
-        app('request')->headers->set('HOST', $domain.'.example.com');
+        app('request')->headers->set('HOST', $domain . '.example.com');
 
         return $this->tenantMiddleware->handle(app('request'), function () {
             return (new Response())->setContent('<html></html>');
@@ -62,9 +78,8 @@ class MiddlewareTest extends TestCase
         try {
             $this->buildRequest($this->testTenant->domain);
             $this->fail('Expected exception not thrown');
-        } catch (UnauthorizedException $e) { //Not catching a generic Exception or the fail function is also catched
-            $this->assertEquals(403, $e->getStatusCode());
-            $this->assertEquals('User is not logged in.', $e->getMessage());
+        } catch (AuthenticationException $e) { //Not catching a generic Exception or the fail function is also catched
+            $this->assertEquals('Unauthenticated.', $e->getMessage());
         }
     }
 
