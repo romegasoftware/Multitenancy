@@ -164,6 +164,14 @@ class Product extends Model
 > **Hint** 
 > If the user is assigned `Super Administrator` access, they will be able to access the `admin` subdomain and the tenant scope will not register. This allows you to manage the data across all instances without needing individual access to each Tenant's account.
 
+### Get Current Tenant
+
+You can get the current tenant model:
+
+```php
+app('multitenancy')->currentTenant();
+```
+
 ### Providing Access to Admin Domain
 
 In order to access the `admin.example.com` subdomain, a user will need the `access admin` permission. This package relies on [Spatie's Laravel Permission](https://github.com/spatie/laravel-permission) package and is automatically included as a dependency when installing this package. We also provide a `Super Administrator` role on migration that has the relevant permission already associated with it. Assign the `Super Administrator` role to an admin user to provide the access they need. See the [Laravel Permission](https://github.com/spatie/laravel-permission) documentation for more on adding users to the appropriate role and permission.
