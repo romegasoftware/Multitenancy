@@ -2,6 +2,8 @@
 
 namespace RomegaDigital\Multitenancy;
 
+use Illuminate\Database\Eloquent\Factory as EloquentFactory;
+use Faker\Generator as FakerGenerator;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Gate;
@@ -27,8 +29,12 @@ class MultitenancyServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->registerPublishing($filesystem);
         }
-
-        $this->app->make('Illuminate\Database\Eloquent\Factory')->load(__DIR__.'/Factories');
+        
+        $this->app->singleton(EloquentFactory::class, function ($app) {
+            return EloquentFactory::construct(
+                $app->make(FakerGenerator::class), __DIR__.'/Factories'
+            );
+        });
 
         $this->registerCommands();
         $this->registerModelBindings();
