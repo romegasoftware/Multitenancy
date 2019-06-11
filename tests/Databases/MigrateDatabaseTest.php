@@ -27,15 +27,4 @@ class MigrateDatabaseTest extends TestCase
             'updated_at',
         ], $columns);
     }
-
-    /** @test **/
-    public function it_has_factory()
-    {
-        $tenant = factory(\RomegaDigital\Multitenancy\Models\Tenant::class)->create();
-        $compare = \RomegaDigital\Multitenancy\Models\Tenant::latest('id')->first();
-
-        $this->assertEquals($compare->id, $tenant->id);
-        $this->assertEquals($compare->name, $tenant->name);
-        $this->assertEquals($compare->domain, $tenant->domain);
-    }
 }
