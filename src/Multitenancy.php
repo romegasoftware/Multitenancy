@@ -54,6 +54,16 @@ class Multitenancy
     }
 
     /**
+     * Returns the current Tenant.
+     *
+     * @return \RomegaDigital\Multitenancy\Contracts\Tenant
+     */
+    public function currentTenant(): Tenant
+    {
+        return $this->tenant ?? $this->receiveTenantFromRequest();
+    }
+
+    /**
      * Applies applicable tenant scopes to model or if not booted yet
      * store for deferment.
      *
