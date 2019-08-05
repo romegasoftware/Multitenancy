@@ -12,7 +12,10 @@ class InstallCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'multitenancy:install';
+    protected $signature = 'multitenancy:install
+                                {--M|migrations= : Run migrations}
+                                {--R|roles= : Add super admin role}
+                                {--T|tenant= : Add admin tenant}';
 
     /**
      * The console command description.
@@ -47,9 +50,9 @@ class InstallCommand extends Command
      */
     public function handle()
     {
-        $this->handleMigrations();
-        $this->addSuperAdminRole();
-        $this->addAdminTenant();
+        $this->option('migrations') ?? $this->handleMigrations();
+        $this->option('roles') ?? $this->addSuperAdminRole();
+        $this->option('tenant') ?? $this->addAdminTenant();
 
         return 1;
     }
