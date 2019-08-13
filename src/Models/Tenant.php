@@ -4,8 +4,8 @@ namespace RomegaDigital\Multitenancy\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use RomegaDigital\Multitenancy\Contracts\Tenant as TenantContract;
 use RomegaDigital\Multitenancy\Exceptions\TenantDoesNotExist;
+use RomegaDigital\Multitenancy\Contracts\Tenant as TenantContract;
 
 class Tenant extends Model implements TenantContract
 {
@@ -38,7 +38,8 @@ class Tenant extends Model implements TenantContract
      */
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(config('multitenancy.user_model'));
+        return $this->belongsToMany(config('multitenancy.user_model'))
+            ->withTimestamps();
     }
 
     /**
@@ -54,7 +55,7 @@ class Tenant extends Model implements TenantContract
     {
         $tenant = static::where(['domain' => $domain])->first();
 
-        if (!$tenant) {
+        if (! $tenant) {
             throw TenantDoesNotExist::forDomain($domain);
         }
 
