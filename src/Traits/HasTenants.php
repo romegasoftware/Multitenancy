@@ -11,6 +11,7 @@ trait HasTenants
      */
     public function tenants()
     {
-        return $this->belongsToMany(config('multitenancy.tenant_model'));
+        return $this->belongsToMany(config('multitenancy.tenant_model'))
+            ->withTimestamps();
     }
 }
