@@ -1,6 +1,7 @@
 {
     "name": "romegadigital/multitenancy",
     "description": "Adds domain based multitenancy to Laravel applications.",
+    "license": "MIT",
     "authors": [
         {
             "name": "Braden Keith",
