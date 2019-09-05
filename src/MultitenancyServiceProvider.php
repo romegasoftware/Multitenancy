@@ -2,15 +2,13 @@
 
 namespace RomegaDigital\Multitenancy;
 
-use Illuminate\Database\Eloquent\Factory as EloquentFactory;
-use Faker\Generator as FakerGenerator;
-use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
-use RomegaDigital\Multitenancy\Commands\AssignAdminPrivileges;
 use RomegaDigital\Multitenancy\Commands\InstallCommand;
 use RomegaDigital\Multitenancy\Commands\MigrationMakeCommand;
+use RomegaDigital\Multitenancy\Commands\AssignAdminPrivileges;
 use RomegaDigital\Multitenancy\Contracts\Tenant as TenantContract;
 
 class MultitenancyServiceProvider extends ServiceProvider
@@ -19,23 +17,21 @@ class MultitenancyServiceProvider extends ServiceProvider
      * Bootstrap the package services.
      *
      * @param Illuminate\Filesystem\Filesystem $filesystem
-     *
-     * @return void
      */
     public function boot(Filesystem $filesystem)
     {
-        $this->loadMigrationsFrom(realpath(__DIR__.'/../migrations'));
+        $this->loadMigrationsFrom(realpath(__DIR__ . '/../migrations'));
 
         if ($this->app->runningInConsole()) {
             $this->registerPublishing($filesystem);
         }
-        
+
         $this->registerCommands();
         $this->registerModelBindings();
 
         Gate::before(function ($user, $ability) {
             if ($user->hasRole(config('multitenancy.roles.super_admin'))
-                && app('multitenancy')->getCurrentSubDomain() === 'admin') {
+                && 'admin' === app('multitenancy')->getCurrentSubDomain()) {
                 return true;
             }
         });
@@ -43,13 +39,11 @@ class MultitenancyServiceProvider extends ServiceProvider
 
     /**
      * Register the application services.
-     *
-     * @return void
      */
     public function register()
     {
         $this->mergeConfigFrom(
-            __DIR__.'/../config/multitenancy.php',
+            __DIR__ . '/../config/multitenancy.php',
             'multitenancy'
         );
 
@@ -64,24 +58,20 @@ class MultitenancyServiceProvider extends ServiceProvider
      * Register the package's publishable resources.
      *
      * @param Illuminate\Filesystem\Filesystem $filesystem
-     *
-     * @return void
      */
     protected function registerPublishing(Filesystem $filesystem)
     {
         $this->publishes([
-            __DIR__.'/../migrations/create_tenants_table.php.stub' => $this->getMigrationFileName($filesystem),
+            __DIR__ . '/../migrations/create_tenants_table.php.stub' => $this->getMigrationFileName($filesystem),
         ], 'migrations');
 
         $this->publishes([
-            __DIR__.'/../config/multitenancy.php' => config_path('multitenancy.php'),
+            __DIR__ . '/../config/multitenancy.php' => config_path('multitenancy.php'),
         ], 'config');
     }
 
     /**
      * Registers all commands within the package.
-     *
-     * @return void
      */
     protected function registerCommands()
     {
@@ -94,8 +84,6 @@ class MultitenancyServiceProvider extends ServiceProvider
 
     /**
      * Register model bindings.
-     *
-     * @return void
      */
     protected function registerModelBindings()
     {
@@ -113,10 +101,10 @@ class MultitenancyServiceProvider extends ServiceProvider
     {
         $timestamp = date('Y_m_d_His');
 
-        return Collection::make($this->app->databasePath().DIRECTORY_SEPARATOR.'migrations'.DIRECTORY_SEPARATOR)
+        return Collection::make($this->app->databasePath() . DIRECTORY_SEPARATOR . 'migrations' . DIRECTORY_SEPARATOR)
             ->flatMap(function ($path) use ($filesystem) {
-                return $filesystem->glob($path.'*_create_tenants_table.php');
-            })->push($this->app->databasePath()."/migrations/{$timestamp}_create_tenants_table.php")
+                return $filesystem->glob($path . '*_create_tenants_table.php');
+            })->push($this->app->databasePath() . "/migrations/{$timestamp}_create_tenants_table.php")
             ->first();
     }
 }
