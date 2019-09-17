@@ -19,7 +19,7 @@
         }
     },
     "require": {
-        "spatie/laravel-permission": "^2.29"
+        "spatie/laravel-permission": "^3.0"
     },
     "extra": {
         "laravel": {
@@ -29,8 +29,8 @@
         }
     },
     "require-dev": {
-        "phpunit/phpunit": "^7.5",
-        "orchestra/testbench": "^3.7",
-        "codedungeon/phpunit-result-printer": "^0.6.0"
+        "phpunit/phpunit": "^8.0",
+        "orchestra/testbench": "^4.0",
+        "codedungeon/phpunit-result-printer": "^0.26.0"
     }
 }

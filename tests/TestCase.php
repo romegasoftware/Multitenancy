@@ -2,13 +2,13 @@
 
 namespace RomegaDigital\Multitenancy\Tests;
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Orchestra\Testbench\TestCase as OrchestraTestCase;
+use Illuminate\Database\Schema\Blueprint;
 use RomegaDigital\Multitenancy\Contracts\Tenant;
-use RomegaDigital\Multitenancy\MultitenancyFacade;
-use RomegaDigital\Multitenancy\MultitenancyServiceProvider;
 use Spatie\Permission\PermissionServiceProvider;
+use RomegaDigital\Multitenancy\MultitenancyFacade;
+use Orchestra\Testbench\TestCase as OrchestraTestCase;
+use RomegaDigital\Multitenancy\MultitenancyServiceProvider;
 
 class TestCase extends OrchestraTestCase
 {
@@ -27,13 +27,6 @@ class TestCase extends OrchestraTestCase
     protected function getEnvironmentSetUp($app)
     {
         $app['config']->set('multitenancy.user_model', '\RomegaDigital\Multitenancy\Tests\User');
-        $app['config']->set('database.default', 'testbench');
-        $app['config']->set('database.connections.testbench', [
-            'driver' => 'sqlite',
-            'database' => ':memory:',
-            'prefix' => '',
-        ]);
-
         $app['config']->set('auth.providers.users.model', config('multitenancy.user_model'));
         $app['config']->set('auth.guards.web.provider', 'users');
     }
