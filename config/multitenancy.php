@@ -84,4 +84,18 @@ return [
     */
 
     'redirect_route' => 'login',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Ingore Tenant on User creation
+    |--------------------------------------------------------------------------
+    |
+    | By default a user is assigned the tenant it is created on. If you create
+    | a user while being on the `admin` tenant, this would assign the created
+    | user the `admin` tenant automatically. If you don't want to get tenants
+    | assigned to users automatically simply disable this setting by setting
+    | it to false.
+    */
+
+    'ignore_tenant_on_user_creation' => false,
 ];

@@ -17,6 +17,7 @@ Any resources saved while accessing a scoped subdomain will automatically be sav
       - [Authenticated](#authenticated)
       - [Guest Tenant](#guest-tenant)
     - [Tenant Assignment for Models](#tenant-assignment-for-models)
+    - [Get Current Tenant](#get-current-tenant)
     - [Providing Access to Admin Domain](#providing-access-to-admin-domain)
   - [Console Commands](#console-commands)
   - [Managing with Nova](#managing-with-nova)
@@ -44,6 +45,8 @@ You can publish the config file with:
 ```bash
 php artisan vendor:publish --provider="RomegaDigital\Multitenancy\MultitenancyServiceProvider" --tag="config"
 ```
+
+If you want the user to automatically be assigned to the Tenant it is created on you can enable this functionality by simply enabling the `ignore_tenant_on_user_creation` setting.
 
 You can automate most of the setup by running:
 

@@ -1,14 +1,14 @@
 <?php
 
-namespace RomegaDigital\Multitenancy\Tests\Stubs\Controllers;
+namespace RomegaDigital\Multitenancy\Tests\Fixtures\Controllers;
 
 use Closure;
-use Illuminate\Contracts\Auth\Access\Gate;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use PHPUnit\Framework\Assert;
+use Illuminate\Contracts\Auth\Access\Gate;
+use RomegaDigital\Multitenancy\Tests\Fixtures\Product;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use RomegaDigital\Multitenancy\Middleware\TenantMiddleware;
-use RomegaDigital\Multitenancy\Tests\Product;
 
 class ProductController extends \Illuminate\Routing\Controller
 {

@@ -3,8 +3,9 @@
 namespace RomegaDigital\Multitenancy\Tests\Feature;
 
 use RomegaDigital\Multitenancy\Models\Tenant;
-use RomegaDigital\Multitenancy\Tests\Product;
 use RomegaDigital\Multitenancy\Tests\TestCase;
+use RomegaDigital\Multitenancy\Tests\Fixtures\Product;
+use RomegaDigital\Multitenancy\Tests\Fixtures\Controllers\ProductController;
 
 class BelongsToTenantTest extends TestCase
 {
@@ -12,14 +13,12 @@ class BelongsToTenantTest extends TestCase
      * Define environment setup.
      *
      * @param Illuminate\Foundation\Application $app
-     *
-     * @return void
      */
     protected function getEnvironmentSetUp($app)
     {
         parent::getEnvironmentSetUp($app);
 
-        $app['router']->resource('products', 'RomegaDigital\Multitenancy\Tests\Stubs\Controllers\ProductController');
+        $app['router']->resource('products', ProductController::class);
     }
 
     /**
@@ -56,9 +55,9 @@ class BelongsToTenantTest extends TestCase
         $this->testTenant->users()->save($this->testUser);
 
         Product::create([
-            'name'      => 'Another Tenants Product',
+            'name' => 'Another Tenants Product',
             'tenant_id' => Tenant::create([
-                'name'   => 'Another Tenant',
+                'name' => 'Another Tenant',
                 'domain' => 'anotherdomain',
             ])->id,
         ]);
@@ -76,9 +75,9 @@ class BelongsToTenantTest extends TestCase
         $this->testTenant->domain = $this->testAdminTenant->domain;
 
         Product::create([
-            'name'      => 'Another Tenants Product',
+            'name' => 'Another Tenants Product',
             'tenant_id' => Tenant::create([
-                'name'   => 'Another Tenant',
+                'name' => 'Another Tenant',
                 'domain' => 'anotherdomain',
             ])->id,
         ]);

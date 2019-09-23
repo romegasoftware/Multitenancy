@@ -2,9 +2,10 @@
 
 namespace RomegaDigital\Multitenancy\Tests\Feature\Commands;
 
+use Spatie\Permission\Models\Role;
 use RomegaDigital\Multitenancy\Models\Tenant;
 use RomegaDigital\Multitenancy\Tests\TestCase;
-use Spatie\Permission\Models\Role;
+use RomegaDigital\Multitenancy\Tests\Fixtures\User;
 
 class AssignAdminPrivilegesTest extends TestCase
 {
@@ -23,7 +24,7 @@ class AssignAdminPrivilegesTest extends TestCase
     {
         $this->artisan('multitenancy:super-admin', [
                 'identifier' => 'fail@user.com',
-                '--model'    => config('multitenancy.user_model'),
+                '--model' => config('multitenancy.user_model'),
             ])
             ->expectsOutput('User with email `fail@user.com` can not be found!')
             ->assertExitCode(0);
@@ -34,7 +35,7 @@ class AssignAdminPrivilegesTest extends TestCase
     {
         $this->artisan('multitenancy:super-admin', [
                 'identifier' => 'test@user.com',
-                '--model'    => config('multitenancy.user_model'),
+                '--model' => config('multitenancy.user_model'),
             ])
             ->expectsOutput('Role with name `Super Administrator` can not be found!')
             ->expectsOutput('*     Did you already run `multitenancy:install` command?     *')
@@ -52,7 +53,7 @@ class AssignAdminPrivilegesTest extends TestCase
 
         $this->artisan('multitenancy:super-admin', [
             'identifier' => 'test@user.com',
-            '--model'    => config('multitenancy.user_model'),
+            '--model' => config('multitenancy.user_model'),
         ])
         ->expectsOutput('Tenant with domain `admin` can not be found!')
         ->expectsOutput('*     Did you already run `multitenancy:install` command?     *')
@@ -66,12 +67,12 @@ class AssignAdminPrivilegesTest extends TestCase
 
         $this->artisan('multitenancy:super-admin', [
                 'identifier' => 'test@user.com',
-                '--model'    => config('multitenancy.user_model'),
+                '--model' => config('multitenancy.user_model'),
             ])
             ->expectsOutput('User with email test@user.com granted Super-Administration rights.')
             ->assertExitCode(1);
 
-        $user = \RomegaDigital\Multitenancy\Tests\User::whereEmail('test@user.com')->first();
+        $user = User::whereEmail('test@user.com')->first();
         $this->assertTrue($user->hasRole('Super Administrator'));
     }
 }

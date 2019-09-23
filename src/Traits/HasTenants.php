@@ -12,7 +12,9 @@ trait HasTenants
     public static function bootHasTenants()
     {
         static::created(function ($model) {
-            if ($model->tenants->count() > 0) {
+            $ignoreTenantOnUserCreation = config('multitenancy.ignore_tenant_on_user_creation');
+
+            if (! request()->has(Multitenancy::TENANT_SET_HEADER) || $ignoreTenantOnUserCreation) {
                 return;
             }
 
