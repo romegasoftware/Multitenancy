@@ -2,12 +2,14 @@
 
 namespace RomegaDigital\Multitenancy;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use RomegaDigital\Multitenancy\Contracts\Tenant;
 
 class Multitenancy
 {
+    const TENANT_SET_HEADER = 'X-Multitenancy-Tenant';
+
     /**
      * The tenant model as defined in the config file.
      *
@@ -79,7 +81,7 @@ class Multitenancy
             return;
         }
 
-        if ($this->tenant->domain === 'admin') {
+        if ('admin' === $this->tenant->domain) {
             return;
         }
 
@@ -103,7 +105,7 @@ class Multitenancy
             return;
         }
 
-        if (!isset($model->tenant_id)) {
+        if (! isset($model->tenant_id)) {
             $model->setAttribute('tenant_id', $this->tenant->id);
         }
     }
@@ -111,8 +113,6 @@ class Multitenancy
     /**
      * Applies applicable tenant scope to deferred model booted
      * before tenants setup.
-     *
-     * @return void
      */
     public function applyTenantScopeToDeferredModels()
     {
@@ -140,11 +140,11 @@ class Multitenancy
      *
      * @return string
      */
-    public function getCurrentSubDomain() : string
+    public function getCurrentSubDomain(): string
     {
         $baseURL = config('multitenancy.base_url');
 
-        if ($baseURL != null) {
+        if (null != $baseURL) {
             return $this->getSubDomainBasedOnBaseURL($baseURL);
         } else {
             return $this->getSubDomainBasedOnHTTPHost();
@@ -161,7 +161,7 @@ class Multitenancy
      *
      * @return string
      */
-    protected function getSubDomainBasedOnHTTPHost() : string
+    protected function getSubDomainBasedOnHTTPHost(): string
     {
         $currentDomain = app('request')->getHost();
 
@@ -187,7 +187,7 @@ class Multitenancy
      *
      * @return string
      */
-    protected function getSubDomainBasedOnBaseURL(string $baseURL) : string
+    protected function getSubDomainBasedOnBaseURL(string $baseURL): string
     {
         $currentDomain = app('request')->getHost();
 
@@ -197,7 +197,7 @@ class Multitenancy
         // If the last element is a period, remove it
         // Necessary to run this check, incase we're
         // processing the base domain.
-        if (substr($subdomain, -1) == '.') {
+        if ('.' == substr($subdomain, -1)) {
             $subdomain = substr($subdomain, 0, -1);
         }
 

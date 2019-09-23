@@ -19,7 +19,7 @@ class TenantMiddleware extends Middleware
     /**
      * Create new TenantMiddleware instance.
      *
-     * @param Illuminate\Contracts\Auth\Factory $auth
+     * @param Illuminate\Contracts\Auth\Factory       $auth
      * @param RomegaDigital\Multitenancy\Multitenancy $multitenancy
      */
     public function __construct(Auth $auth, Multitenancy $multitenancy)
@@ -32,12 +32,13 @@ class TenantMiddleware extends Middleware
     /**
      * Get the path the user should be redirected to when they are not authenticated.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return string
      */
     protected function redirectTo($request)
     {
-        if (!$request->expectsJson()) {
+        if (! $request->expectsJson()) {
             return route(config('multitenancy.redirect_route'));
         }
     }
@@ -47,7 +48,7 @@ class TenantMiddleware extends Middleware
      *
      * @param \Illuminate\Http\Request $request
      * @param \Closure                 $next
-     * @param string[] ...$guards
+     * @param string[]                 ...$guards
      *
      * @throws \RomegaDigital\Multitenancy\Exceptions\UnauthorizedException|\Illuminate\Auth\AuthenticationException
      *
@@ -59,11 +60,13 @@ class TenantMiddleware extends Middleware
 
         $tenant = $this->multitenancy->receiveTenantFromRequest();
 
-        if (!$this->authorizedToAccessTenant($tenant)) {
+        if (! $this->authorizedToAccessTenant($tenant)) {
             throw UnauthorizedException::forDomain($tenant->domain);
         }
 
         $this->multitenancy->setTenant($tenant)->applyTenantScopeToDeferredModels();
+
+        $request->merge([Multitenancy::TENANT_SET_HEADER => true]);
 
         return $next($request);
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace RomegaDigital\Multitenancy\Tests;
+namespace RomegaDigital\Multitenancy\Tests\Fixtures;
 
 use Illuminate\Database\Eloquent\Model;
 use RomegaDigital\Multitenancy\Traits\BelongsToTenant;

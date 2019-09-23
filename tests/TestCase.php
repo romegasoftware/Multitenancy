@@ -7,7 +7,9 @@ use Illuminate\Database\Schema\Blueprint;
 use RomegaDigital\Multitenancy\Contracts\Tenant;
 use Spatie\Permission\PermissionServiceProvider;
 use RomegaDigital\Multitenancy\MultitenancyFacade;
+use RomegaDigital\Multitenancy\Tests\Fixtures\User;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
+use RomegaDigital\Multitenancy\Tests\Fixtures\Product;
 use RomegaDigital\Multitenancy\MultitenancyServiceProvider;
 
 class TestCase extends OrchestraTestCase
@@ -26,7 +28,7 @@ class TestCase extends OrchestraTestCase
      */
     protected function getEnvironmentSetUp($app)
     {
-        $app['config']->set('multitenancy.user_model', '\RomegaDigital\Multitenancy\Tests\User');
+        $app['config']->set('multitenancy.user_model', User::class);
         $app['config']->set('auth.providers.users.model', config('multitenancy.user_model'));
         $app['config']->set('auth.guards.web.provider', 'users');
     }
