@@ -89,15 +89,13 @@ Tenants require a name to identify the tenant and and a subdomain that is associ
 These values could be added to the database like so:
 
 ```php
-Tenant::createMany([
-    [
-        'name'    => 'An Identifying Name',
-        'domain'  => 'tenant1'
-    ],
-    [
-        'name'    => 'A Second Customer',
-        'domain'  => 'tenant2'
-    ]
+Tenant::create([
+    'name'    => 'An Identifying Name',
+    'domain'  => 'tenant1'
+]);
+Tenant::create([
+    'name'    => 'A Second Customer',
+    'domain'  => 'tenant2'
 ]);
 ```
 
