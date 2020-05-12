@@ -62,7 +62,7 @@ class MultitenancyServiceProvider extends ServiceProvider
     protected function registerPublishing(Filesystem $filesystem)
     {
         $this->publishes([
-            __DIR__ . '/../migrations/create_tenants_table.php.stub' => $this->getMigrationFileName($filesystem),
+            __DIR__ . '/../migrations/create_'.config('multitenancy.table_names.tenants').'_table.php.stub' => $this->getMigrationFileName($filesystem),
         ], 'migrations');
 
         $this->publishes([
