@@ -107,9 +107,9 @@ class AssignAdminPrivileges extends Command
     protected function getAdminRole()
     {
         try {
-            return Role::findByName('Super Administrator');
+            return Role::findByName(config('multitenancy.roles.super_admin'));
         } catch (RoleDoesNotExist $exception) {
-            return $this->cancel('Role', 'name', 'Super Administrator');
+            return $this->cancel('Role', 'name', config('multitenancy.roles.super_admin'));
         }
     }
 
