@@ -39,7 +39,23 @@ return [
     */
 
     'roles' => [
+        // What the super_admin is called in your app
         'super_admin' => 'Super Administrator',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Policy Files
+    |--------------------------------------------------------------------------
+    |
+    | The policy file to use when using [MultitenancyNovaTool]
+    | (https://github.com/romegasoftware/MultitenancyNovaTool)
+    */
+
+    'policies' => [
+        'role' => \RomegaDigital\MultitenancyNovaTool\Policies\RolePolicy::class,
+
+        'permission' => \RomegaDigital\MultitenancyNovaTool\Policies\PermissionPolicy::class,
     ],
 
     /*
