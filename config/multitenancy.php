@@ -60,6 +60,21 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Nova Resource Files
+    |--------------------------------------------------------------------------
+    |
+    | The Nova resources to use when using [MultitenancyNovaTool]
+    | (https://github.com/romegasoftware/MultitenancyNovaTool)
+    */
+
+    'resources' => [
+        'role' => \Vyuldashev\NovaPermission\Role::class,
+
+        'permission' => \Vyuldashev\NovaPermission\Permission::class,
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Tenant Model
     |--------------------------------------------------------------------------
     |
