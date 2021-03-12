@@ -11,7 +11,7 @@ return [
     | access to tenant instance.
     */
 
-    'user_model' => \App\User::class,
+    'user_model' => \App\Models\User::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -87,19 +87,19 @@ return [
     'tenant_model' => \RomegaDigital\Multitenancy\Models\Tenant::class,
 
     'table_names' => [
-        /*
+        /**
          * We need to know which table to setup foreign relationships on.
          */
 
         'users' => 'users',
 
-        /*
+        /**
          * If overwriting `tenant_model`, you may also wish to define a new table
          */
 
         'tenants' => 'tenants',
 
-        /*
+        /**
          * Define the relationship table for the belongsToMany relationship
          */
 
