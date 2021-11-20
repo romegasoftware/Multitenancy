@@ -118,7 +118,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Ingore Tenant on User creation
+    | Ignore Tenant on User creation
     |--------------------------------------------------------------------------
     |
     | By default a user is assigned the tenant it is created on. If you create
