@@ -19,7 +19,7 @@
         }
     },
     "require": {
-        "spatie/laravel-permission": "^3.0"
+        "spatie/laravel-permission": "^5.5"
     },
     "extra": {
         "laravel": {
