@@ -68,7 +68,7 @@ class InstallCommand extends Command
 
         $this->callSilent('vendor:publish', [
             '--provider' => 'Spatie\Permission\PermissionServiceProvider',
-            '--tag'      => ['migrations'],
+            '--tag'      => ['permission-migrations'],
         ]);
 
         $this->callSilent('vendor:publish', [
