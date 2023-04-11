@@ -17,7 +17,7 @@ class AssignAdminPrivileges extends Command
      */
     protected $signature = 'multitenancy:super-admin
                                 {identifier : Unique property identifying the user}
-                                {--M|model=\App\User : Model to query the user}
+                                {--M|model=\App\Models\User : Model to query the user}
                                 {--C|column=email : Property column name}';
 
     /**
