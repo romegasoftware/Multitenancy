@@ -130,12 +130,7 @@ Route::group(['middleware' => ['tenant.auth']], function () {
 This package comes with `GuestTenantMiddleware` middleware which applies the tenant scope to all models and can be used for allowing guest users to access Tenant related pages. You can add it inside your `app/Http/Kernel.php` file.
 
 ```php
-// Note the property name difference between Laravel 10 and older versions of Laravel
-// Laravel 9 uses $routeMiddleware = [
-//protected $routeMiddleware = [
-// Laravel 10+ uses $middlewareAliases = [
 protected $middlewareAliases = [
-protected $routeMiddleware = [
     // ...
     'tenant.guest' => \RomegaDigital\Multitenancy\Middleware\GuestTenantMiddleware::class,
 ];
