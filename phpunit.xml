@@ -8,8 +8,7 @@
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
          processIsolation="false"
-         stopOnFailure="false"
-         printerClass="Codedungeon\PHPUnitPrettyResultPrinter\Printer">
+         stopOnFailure="false">
     <testsuites>
         <testsuite name="Multitenancy Test Suite">
             <directory>tests</directory>

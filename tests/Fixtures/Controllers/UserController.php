@@ -32,11 +32,15 @@ class UserController extends \Illuminate\Routing\Controller
         if (! $request->has('tenant')) {
             return User::create([
                 'email' => $request->email,
+                'name' => $request->name,
+                'password' => $request->password,
             ]);
         }
 
         $user = new User([
             'email' => $request->email,
+            'name' => $request->name,
+            'password' => $request->password,
         ]);
 
         resolve(Tenant::class)->find($request->tenant)->first()->users()->save($user);

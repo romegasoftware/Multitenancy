@@ -63,6 +63,8 @@ class MigrationMakeCommand extends GeneratorCommand
 
         $this->composer->dumpAutoloads();
 
+        $this->info('Multitenancy migration created successfully.');
+
         return 1;
     }
 

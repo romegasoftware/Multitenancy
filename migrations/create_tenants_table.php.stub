@@ -19,6 +19,7 @@ class CreateTenantsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name')->unique();
             $table->string('domain')->unique();
+            $table->softDeletes();
             $table->timestamps();
         });
 
@@ -55,7 +56,7 @@ class CreateTenantsTable extends Migration
             $table->dropForeign(['tenant_id']);
             $table->dropForeign(['user_id']);
         });
-        
+
         Schema::dropIfExists($tableNames['tenants']);
         Schema::dropIfExists($tableNames['tenant_user']);
     }

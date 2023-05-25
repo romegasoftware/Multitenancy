@@ -43,6 +43,8 @@ class HasTenantTest extends TestCase
 
         $this->post('users', [
                 'email' => $email = 'another@user.com',
+                'name' => 'UserName',
+                'password' => 'PassWord',
             ])
             ->assertStatus(201);
 
@@ -62,6 +64,8 @@ class HasTenantTest extends TestCase
         $this->actingAs($this->testUser)
             ->post('users', [
                 'email' => $email = 'with@tenant.com',
+                'name' => 'UserName',
+                'password' => 'PassWord',
                 'tenant' => $otherTenant,
             ])
             ->assertStatus(201);

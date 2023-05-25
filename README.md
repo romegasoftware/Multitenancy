@@ -162,7 +162,7 @@ class Product extends Model
 }
 ```
 
-> **Hint** 
+> **Hint**
 > If the user is assigned `Super Administrator` access, they will be able to access the `admin` subdomain and the tenant scope will not register. This allows you to manage the data across all instances without needing individual access to each Tenant's account.
 
 ### Get Current Tenant
@@ -203,3 +203,8 @@ php artisan multitenancy:super-admin admin@example.com
 ## Managing with Nova
 
 There is a separate [Nova Package](https://github.com/romegadigital/MultitenancyNovaTool) available that allows you to manage the resources utilized in this package in Nova.
+
+
+## Testing Package
+
+`php vendor/bin/testbench package:test`

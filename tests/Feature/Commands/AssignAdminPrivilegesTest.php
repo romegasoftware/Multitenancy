@@ -15,7 +15,7 @@ class AssignAdminPrivilegesTest extends TestCase
         $this->artisan('multitenancy:super-admin', [
                 'identifier' => 'test@user.com',
             ])
-            ->expectsOutput('User model \App\User can not be found!')
+            ->expectsOutput('User model \App\Models\User can not be found!')
             ->assertExitCode(0);
     }
 

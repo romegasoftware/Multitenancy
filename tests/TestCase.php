@@ -77,6 +77,16 @@ class TestCase extends OrchestraTestCase
     }
 
     /**
+     * Define database migrations.
+     *
+     * @return void
+     */
+    protected function defineDatabaseMigrations()
+    {
+        $this->loadLaravelMigrations();
+    }
+
+    /**
      * Set up the database.
      *
      * @param \Illuminate\Foundation\Application $app
@@ -95,12 +105,11 @@ class TestCase extends OrchestraTestCase
             'domain' => 'admin',
         ]);
 
-        Schema::create('users', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('email');
-            $table->softDeletes();
-        });
-        User::create(['email' => 'test@user.com']);
+        User::create([
+            'name' => "Test User",
+            'email' => 'test@user.com',
+            'password' => 'testPassword',
+        ]);
 
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');

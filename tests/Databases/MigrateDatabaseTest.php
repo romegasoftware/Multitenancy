@@ -14,6 +14,7 @@ class MigrateDatabaseTest extends TestCase
             'id',
             'name',
             'domain',
+            'deleted_at',
             'created_at',
             'updated_at',
         ], $columns);
@@ -25,6 +26,7 @@ class MigrateDatabaseTest extends TestCase
             'user_id',
             'created_at',
             'updated_at',
+            'deleted_at',
         ], $columns);
     }
 }
