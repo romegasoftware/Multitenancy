@@ -4,11 +4,13 @@ namespace RomegaDigital\Multitenancy\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use RomegaDigital\Multitenancy\Exceptions\TenantDoesNotExist;
 use RomegaDigital\Multitenancy\Contracts\Tenant as TenantContract;
 
 class Tenant extends Model implements TenantContract
 {
+    use SoftDeletes;
     /**
      * The attributes that are mass assignable.
      *

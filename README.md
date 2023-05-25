@@ -112,7 +112,7 @@ Tenant::first()->users()->save($user);
 This package comes with `TenantMiddleware` middleware which extends Laravel's `Illuminate\Auth\Middleware\Authenticate`. You can add it inside your `app/Http/Kernel.php` file.
 
 ```php
-protected $routeMiddleware = [
+protected $middlewareAliases = [
     // ...
     'tenant.auth' => \RomegaDigital\Multitenancy\Middleware\TenantMiddleware::class,
 ];
@@ -130,7 +130,7 @@ Route::group(['middleware' => ['tenant.auth']], function () {
 This package comes with `GuestTenantMiddleware` middleware which applies the tenant scope to all models and can be used for allowing guest users to access Tenant related pages. You can add it inside your `app/Http/Kernel.php` file.
 
 ```php
-protected $routeMiddleware = [
+protected $middlewareAliases = [
     // ...
     'tenant.guest' => \RomegaDigital\Multitenancy\Middleware\GuestTenantMiddleware::class,
 ];
