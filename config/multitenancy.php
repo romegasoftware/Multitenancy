@@ -19,10 +19,9 @@ return [
     |--------------------------------------------------------------------------
     |
     | This is the URL you would like to serve as the base of your app. It
-    | should not contain a prefix (ie: http://, https://).
+    | should not contain a scheme (ie: http://, https://).
     | By default, it will attempt to use the host name with the TLD and domain
     | name stripped.
-    | (ie: subdomain.master.example.com will return subdomain.master)
     |
     | Default: null
     */
@@ -39,7 +38,7 @@ return [
     */
 
     'roles' => [
-        // What the super_admin is called in your app
+        // What the Super Administrator is called in your app
         'super_admin' => 'Super Administrator',
     ],
 
@@ -54,7 +53,6 @@ return [
 
     'policies' => [
         'role' => \RomegaDigital\MultitenancyNovaTool\Policies\RolePolicy::class,
-
         'permission' => \RomegaDigital\MultitenancyNovaTool\Policies\PermissionPolicy::class,
     ],
 
@@ -69,7 +67,6 @@ return [
 
     'resources' => [
         'role' => \Vyuldashev\NovaPermission\Role::class,
-
         'permission' => \Vyuldashev\NovaPermission\Permission::class,
     ],
 

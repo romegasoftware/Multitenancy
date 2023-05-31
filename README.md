@@ -17,7 +17,7 @@ This package provides a convenient way to add multitenancy to your Laravel appli
 
 ## Installation
 
-Use composer to install the package:
+#### 1. Use composer to install the package:
 
 ``` bash
 composer require romegadigital/multitenancy
@@ -32,13 +32,13 @@ In Laravel 5.5 and newer, the service provider gets registered automatically. Fo
 ];
 ```
 
-Publish the config file with:
+#### 2. Publish the config file
 
 ```bash
 php artisan vendor:publish --provider="RomegaDigital\Multitenancy\MultitenancyServiceProvider" --tag="config"
 ```
 
-Run the setup with:
+#### 3. Run the setup
 
 ```bash
 php artisan multitenancy:install
@@ -49,7 +49,13 @@ This command will:
 - Add a `Super Administrator` role and `access admin` permission
 - Create an `admin` Tenant model
 
-## Usage
+
+#### 4. Update your `.env` file
+The package needs to know your base URL so it can determine what constitutes a tenant by the subdomain.
+
+Add this to your `.env` file: `MULTITENANCY_BASE_URL=`
+
+#### 5. Update your User model
 
 Apply the `RomegaDigital\Multitenancy\Traits\HasTenants` and `Spatie\Permission\Traits\HasRoles` traits to your User model(s):
 
@@ -64,6 +70,10 @@ class User extends Authenticatable
     // ...
 }
 ```
+
+
+## Usage
+
 
 Tenants require a name to identify the tenant and a subdomain that is associated with that user. Example:
 
