@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 
 class CreateTenantsTable extends Migration
 {
@@ -27,13 +28,13 @@ class CreateTenantsTable extends Migration
             $table->bigIncrements('id');
 
             $table->unsignedBigInteger('tenant_id');
-            $table->foreign('tenant_id')
+            $table->foreign(Str::singular($tableNames['tenants']).'_id')
                 ->references('id')
                 ->on($tableNames['tenants'])
                 ->onDelete('cascade');
 
             $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')
+            $table->foreign(Str::singular($tableNames['users']).'_id')
                 ->references('id')
                 ->on($tableNames['users'])
                 ->onDelete('cascade');
@@ -53,8 +54,8 @@ class CreateTenantsTable extends Migration
         $tableNames = config('multitenancy.table_names');
 
         Schema::table($tableNames['tenant_user'], function (Blueprint $table) use ($tableNames) {
-            $table->dropForeign(['tenant_id']);
-            $table->dropForeign(['user_id']);
+            $table->dropForeign([Str::singular($tableNames['tenants']).'_id']);
+            $table->dropForeign([Str::singular($tableNames['users']).'_id']);
         });
 
         Schema::dropIfExists($tableNames['tenants']);
