@@ -110,7 +110,7 @@ class InstallCommand extends Command
     {
         $this->info('Adding `admin` domain...');
 
-        $this->multitenancy->getTenantClass()::create([
+        $this->multitenancy->getTenantClass()::updateOrCreate([
             'name'   => 'Admin Portal',
             'domain' => 'admin',
         ]);
